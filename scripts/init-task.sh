@@ -4,6 +4,9 @@
 
 set -e  # Exit on error
 
+sudo apt-get update
+sudo apt-get install -y bc jq curl
+
 echo "🚀 Initializing Network Optimization Challenge..."
 
 # Load configuration
