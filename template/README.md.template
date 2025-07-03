@@ -1,0 +1,96 @@
+# Network Infrastructure Optimization Challenge (占位符将被init-task.sh动态替换)
+
+## Background
+{{company_scenario}}
+
+## Company Profile
+- **Company Name**: {{company_name}}
+- **Number of Offices**: {{num_nodes}}
+- **Network Connections**: {{num_edges}}
+- **Upgrade Budget**: {{upgrade_budget}} connections
+
+## Problem Statement
+
+Your company's network infrastructure connects all office locations through various network links. Each link has a specific bandwidth capacity (strength). Due to rapid business growth, you need to optimize the network topology to maximize the minimum bandwidth across all essential connections while staying within budget.
+
+### Key Constraints
+
+1. **Spanning Tree Requirement**: The final network must form a spanning tree (no cycles, all offices connected)
+2. **Mandatory Connections**: Some connections are marked as mandatory (critical business links) and MUST be included
+3. **Upgrade Limit**: You can upgrade at most {{upgrade_budget}} connections
+4. **Upgrade Effect**: Each upgrade doubles the bandwidth of a connection
+5. **Optimization Goal**: Maximize the minimum bandwidth among all connections in the final network
+
+## Technical Specifications
+
+### Input Format
+The network data is provided in `input_data.json`:
+```json
+{
+  "nodes": [0, 1, 2, ...],           // Office IDs
+  "edges": [
+    [0, 1, 50, 1],                   // [from, to, bandwidth, is_mandatory]
+    [1, 2, 30, 0],                   // is_mandatory: 1=yes, 0=no
+    ...
+  ],
+  "budget": {{upgrade_budget}}       // Number of available upgrades
+}
+
+### Expected Output
+Your function should return a dictionary:
+```python
+{
+    "selected_edges": [              # List of edges in your spanning tree
+        {"from": 0, "to": 1, "upgraded": True},
+        {"from": 1, "to": 2, "upgraded": False},
+        ...
+    ],
+    "minimum_bandwidth": 60          # The minimum bandwidth in your network
+}
+```
+### Your Task
+Implement the optimize_network() function in solution.py:
+```python
+def optimize_network(nodes, edges, budget):
+    """
+    Optimize network topology to maximize minimum bandwidth.
+    
+    Args:
+        nodes: List of node IDs representing offices
+        edges: List of [from, to, bandwidth, is_mandatory] representing connections
+        budget: Integer number of available upgrades
+        
+    Returns:
+        Dictionary with 'selected_edges' and 'minimum_bandwidth'
+    """
+    # Your implementation here
+    pass
+```
+
+Evaluation Criteria
+1. Correctness: Solution must form a valid spanning tree including all mandatory edges
+2. Optimization: Higher minimum bandwidth scores better
+3. Efficiency: Solution should handle networks with up to 50 offices efficiently
+### Getting Started
+1. Review the network data in `input_data.json`
+2. Understand the constraints and requirements
+3. Implement your solution in `solution.py`
+4. Test locally with: python `test_solution.py`
+5. Submit your solution with: `./submit.sh`
+### Example
+For a simple 3-node network:
+
+- Nodes: [0, 1, 2]
+- Edges: [[0,1,40,1], [1,2,20,0], [0,2,30,0]]
+- Budget: 1
+Optimal solution:
+
+- Select edges: (0,1) [mandatory] and (1,2)
+- Upgrade edge (1,2) from 20 to 40
+- Minimum bandwidth: 40
+### Tips
+- Consider which edges to include first (mandatory edges are required)
+- Think about where upgrades would have the most impact
+- Remember that doubling a weak link might be better than upgrading a strong one
+- Use graph algorithms wisely (MST variations, etc.)
+Good luck!

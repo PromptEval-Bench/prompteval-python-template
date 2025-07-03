@@ -1,0 +1,36 @@
+{
+  "task_id": "NET-OPT-003",
+  "title": "Network Infrastructure Optimization",
+  "category": "graph_algorithms",
+  "subcategory": "spanning_tree_optimization",
+  "difficulty": "hard",
+  "estimated_time_minutes": 90,
+  "points": 100,
+  "tags": [
+    "graphs",
+    "optimization",
+    "spanning-tree",
+    "greedy-algorithms",
+    "minimum-spanning-tree"
+  ],
+  "skills_assessed": [
+    "graph_theory",
+    "algorithm_design",
+    "optimization_strategies",
+    "complexity_analysis",
+    "edge_case_handling"
+  ],
+  "prerequisites": [
+    "understanding_of_graphs",
+    "mst_algorithms",
+    "basic_optimization"
+  ],
+  "learning_outcomes": [
+    "Apply MST algorithms with constraints",
+    "Optimize under multiple objectives",
+    "Handle real-world network problems"
+  ],
+  "author": "AI Assessment Team",
+  "version": "1.0.0",
+  "last_updated": "2024-01-15"
+}
