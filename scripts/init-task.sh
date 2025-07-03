@@ -4,6 +4,7 @@
 
 set -e  # Exit on error
 
+# For template creators: Please check if any system dependencies are missing
 sudo apt-get update
 sudo apt-get install -y bc jq curl
 
