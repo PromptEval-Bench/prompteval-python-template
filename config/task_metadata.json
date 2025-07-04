@@ -1,10 +1,10 @@
 {
-  "task_id": "NET-OPT-003",
+  "task_id": "PYTHON-MEDIUM-001",
+  "category": "algorithm",
   "title": "Network Infrastructure Optimization",
-  "category": "graph_algorithms",
   "subcategory": "spanning_tree_optimization",
   "difficulty": "hard",
-  "estimated_time_minutes": 90,
+  "estimated_time_minutes": 50,
   "points": 100,
   "tags": [
     "graphs",
@@ -30,7 +30,7 @@
     "Optimize under multiple objectives",
     "Handle real-world network problems"
   ],
-  "author": "AI Assessment Team",
+  "original_url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
   "version": "1.0.0",
-  "last_updated": "2024-01-15"
+  "last_updated": "2025-07-04"
 }
