@@ -1,0 +1,42 @@
+{
+  "rule_based_params": {
+    "handler_type": {
+      "type": "choice",
+      "options": ["StreamHandler", "FileHandler", "ConsoleHandler"],
+      "description": "Type of logging handler mentioned in examples"
+    },
+    "log_level": {
+      "type": "choice", 
+      "options": ["DEBUG", "INFO", "WARNING", "ERROR"],
+      "description": "Default log level mentioned in problem"
+    },
+    "module_complexity": {
+      "type": "integer",
+      "min": 3,
+      "max": 8,
+      "description": "Number of configuration flags in the module"
+    }
+  },
+  "llm_variations": {
+    "library_name": {
+      "prompt": "Generate a realistic Python library name for medical imaging or data processing. Be professional and descriptive. Examples: 'MedImage', 'DataFlow', 'ImageCore'. Return only the library name, nothing else.",
+      "max_tokens": 15,
+      "temperature": 0.7
+    },
+    "use_case_scenario": {
+      "prompt": "Write a 2-3 sentence scenario describing how a developer is using the {library_name} library and encountering duplicate logging output. Include specific symptoms like duplicate messages or unwanted log formatting. Be technical but concise.",
+      "max_tokens": 120,
+      "temperature": 0.6,
+      "variables": ["library_name"]
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_test_coverage": true,
+    "maintain_api_compatibility": true,
+    "follow_logging_best_practices": true
+  }
+}

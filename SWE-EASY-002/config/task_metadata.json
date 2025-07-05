@@ -1,0 +1,37 @@
+{
+  "task_id": "SWE-EASY-002",
+  "category": "development",
+  "title": "Fix PyDICOM Logging Configuration",
+  "subcategory": "library_design",
+  "difficulty": "easy",
+  "estimated_time_minutes": 30,
+  "points": 80,
+  "tags": [
+    "python",
+    "logging",
+    "library-design",
+    "best-practices",
+    "pydicom"
+  ],
+  "skills_assessed": [
+    "python_logging",
+    "library_design_principles",
+    "code_refactoring",
+    "unit_testing",
+    "debugging"
+  ],
+  "prerequisites": [
+    "python_basics",
+    "logging_module",
+    "software_engineering_principles"
+  ],
+  "learning_outcomes": [
+    "Understand proper logging configuration for libraries",
+    "Apply Python logging best practices",
+    "Fix library initialization issues"
+  ],
+  "original_repo": "pydicom/pydicom",
+  "original_issue": "pydicom__pydicom-901",
+  "version": "1.0.0",
+  "last_updated": "2025-07-05"
+}

@@ -1,0 +1,86 @@
+# Fix {{library_name}} Logging Configuration
+
+**Date**: {{current_date}}
+
+## Problem Description
+
+{{use_case_scenario}}
+
+The issue is that {{library_name}} is improperly configuring logging when the module is imported. According to Python's logging best practices, **libraries should not add any handlers other than NullHandler to their loggers**.
+
+### Current Problem
+
+When {{library_name}} is imported, it automatically:
+1. Creates a StreamHandler for the logger
+2. Sets up a formatter with a specific format
+3. Sets the default log level
+4. Adds the handler to the logger
+
+This causes several issues:
+- Duplicate log messages when applications configure their own logging
+- Interference with application-level logging configuration  
+- Unexpected output to stderr during imports
+- Violation of Python logging best practices
+
+### Example of Current Problematic Behavior
+
+```python
+import {{library_name}}
+# Output appears immediately:
+Could not import pillow
+2018-03-25 15:27:29,744 :: DEBUG :: {{library_name}}
+  Could not import pillow
+Could not import jpeg_ls  
+2018-03-25 15:27:29,745 :: DEBUG :: {{library_name}}
+  Could not import jpeg_ls
+
+### Your Task
+Fix the logging configuration in `src/{{library_name}}/config.py` to follow Python's recommended practices:
+
+Requirements
+1. Remove automatic handler configuration: The library should not add StreamHandler by default
+2. Use NullHandler instead: Add only a NullHandler to the logger by default
+3. Modify the debug function: Update it to optionally add StreamHandler when explicitly requested
+4. Maintain backward compatibility: Ensure existing debug functionality still works
+5.Update function signature: Add a default_handler parameter to the debug function
+
+### Expected Changes
+The `debug()` function should be modified to:
+
+- Accept a new parameter `default_handler=True`
+- Only add StreamHandler when `default_handler=True`
+- Still control the log level (DEBUG/WARNING) based on `debug_on` parameter
+- Preserve the existing optimization flag for performance
+
+### Test Requirements
+Your implementation must pass all the provided tests in `test_config.py`, which verify:
+
+- Default logger has only NullHandler
+- debug(True, False) enables debug logging without adding StreamHandler
+- debug(False, False) disables debug logging with only NullHandler
+- debug(True, True) enables debug logging and adds StreamHandler
+- debug(False, True) disables debug logging but keeps StreamHandler
+
+### Files to Modify
+- `src/{{library_name}}/config.py` - Main configuration file that needs logging fixes
+
+### Getting Started
+1. Examine the current config.py implementation
+2. Understand the existing logging setup and debug function
+3. Review the test cases to understand expected behavior
+4. Implement the changes following Python logging best practices
+5. Run tests to verify your implementation
+
+### Testing
+Run the test suite:
+```
+python -m pytest test_config.py -v
+```
+
+### Hints
+- Review Python's logging documentation for library best practices
+- The debug function is used for performance optimization in the core parsing loop
+- Keep the global debugging flag for performance reasons
+- Remember that NullHandler discards all logging records by default
+Good luck! 🍀
+
