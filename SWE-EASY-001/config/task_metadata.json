@@ -1,0 +1,36 @@
+{
+  "task_id": "SWE-EASY-001",
+  "category": "algorithm",
+  "title": "Network Infrastructure Optimization",
+  "subcategory": "spanning_tree_optimization",
+  "difficulty": "hard",
+  "estimated_time_minutes": 50,
+  "points": 100,
+  "tags": [
+    "graphs",
+    "optimization",
+    "spanning-tree",
+    "greedy-algorithms",
+    "minimum-spanning-tree"
+  ],
+  "skills_assessed": [
+    "graph_theory",
+    "algorithm_design",
+    "optimization_strategies",
+    "complexity_analysis",
+    "edge_case_handling"
+  ],
+  "prerequisites": [
+    "understanding_of_graphs",
+    "mst_algorithms",
+    "basic_optimization"
+  ],
+  "learning_outcomes": [
+    "Apply MST algorithms with constraints",
+    "Optimize under multiple objectives",
+    "Handle real-world network problems"
+  ],
+  "original_url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-04"
+}
