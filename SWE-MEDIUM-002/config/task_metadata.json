@@ -1,5 +1,3 @@
-## config/task_metadata.json
-```json
 {
   "task_id": "SWE-MEDIUM-002",
   "category": "devlopment",
@@ -81,7 +79,7 @@ assert np.allclose(pc['i_xx'], outs['i_xx'], atol=1e-6, rtol=0)
 +
 @pytest.mark.parametrize('method', ['lambertw'])
 def test_ivcurve_pnts_precision(method, precise_iv_curves):
-"""",
+",
     "problem_statement": "_golden_sect_DataFrame changes in 0.9.4
 **Describe the bug**
 
