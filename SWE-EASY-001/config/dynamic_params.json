@@ -1,50 +1,61 @@
 {
   "rule_based_params": {
-    "num_nodes": {
+    "array_length": {
       "type": "integer",
-      "min": 10,
-      "max": 30,
+      "min": 5,
+      "max": 25,
       "step": 1,
-      "description": "Number of office locations in the network"
+      "description": "Number of employee IDs in the system"
     },
-    "num_edges": {
+    "max_employee_id": {
       "type": "integer",
-      "min_ratio": 1.2,
-      "max_ratio": 2.5,
-      "description": "Number of connections (ratio relative to nodes)"
-    },
-    "upgrade_budget": {
-      "type": "integer",
-      "min": 3,
-      "max": 10,
+      "min": 100,
+      "max": 999,
       "step": 1,
-      "description": "Number of available connection upgrades"
+      "description": "Maximum value for employee IDs"
     },
-    "bandwidth_range": {
-      "type": "integer_range",
-      "min": 10,
+    "max_array_length": {
+      "type": "integer",
+      "min": 50,
       "max": 100,
-      "step": 10,
-      "description": "Range for initial bandwidth values"
+      "step": 1,
+      "description": "Maximum possible array length for constraints"
     },
-    "mandatory_edge_ratio": {
+    "validation_threshold": {
+      "type": "integer",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "description": "Security validation threshold"
+    },
+    "valid_solution_probability": {
       "type": "float",
-      "min": 0.1,
-      "max": 0.3,
-      "description": "Percentage of edges that are mandatory"
+      "min": 0.3,
+      "max": 0.8,
+      "description": "Probability that generated array has a valid solution"
     }
   },
   "llm_variations": {
     "company_name": {
-      "prompt": "Generate a realistic technology company name. Be creative but professional. Examples: 'DataStream Solutions', 'NexGen Systems', 'CloudPeak Technologies'. Return only the company name, nothing else.",
+      "prompt": "Generate a realistic company name related to security, technology, or employee management. Examples: 'SecureID Technologies', 'EmployeeFirst Systems', 'DataGuard Solutions'. Return only the company name.",
       "max_tokens": 20,
       "temperature": 0.8
     },
     "company_scenario": {
-      "prompt": "Write a 2-3 sentence business scenario for a company named {company_name} that needs to optimize their network infrastructure connecting {num_nodes} offices. Include a specific business challenge or growth situation. Be concise and realistic.",
-      "max_tokens": 150,
+      "prompt": "Write a 2-3 sentence scenario about {company_name} implementing a new employee ID validation system for {array_length} employees. Focus on security and digital verification. Be professional and concise.",
+      "max_tokens": 120,
       "temperature": 0.7,
-      "variables": ["company_name", "num_nodes"]
+      "variables": ["company_name", "array_length"]
+    },
+    "function_name": {
+      "prompt": "Create a professional function name for finding an index where digit sum equals index. Examples: 'find_validation_index', 'locate_self_validating_id', 'get_matching_digit_index'. Return only the function name.",
+      "max_tokens": 15,
+      "temperature": 0.6
+    },
+    "security_level": {
+      "prompt": "Generate a security classification level (e.g., 'Standard', 'Enhanced', 'Maximum', 'Level-2', 'Tier-A'). Return only the level name.",
+      "max_tokens": 10,
+      "temperature": 0.5
     },
     "current_date": {
       "type": "system",
@@ -52,8 +63,7 @@
     }
   },
   "constraints": {
-    "ensure_connectivity": true,
     "ensure_solvability": true,
-    "difficulty_variance": 0.2
+    "difficulty_variance": 0.1
   }
 }

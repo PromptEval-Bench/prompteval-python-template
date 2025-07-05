@@ -1,110 +1,146 @@
 #!/usr/bin/env python3
 """
-Network Infrastructure Optimization Solution
-{{company_name}} - Network Engineering Team
+Employee ID Validation System
+{{company_name}} - Security Department
 
-Task: Optimize network topology to maximize minimum bandwidth
+Task: Find smallest index where digit sum equals index
 Author: [Your Name]
 Date: {{current_date}}
 """
 
 import json
-from typing import List, Dict, Tuple, Set
+from typing import List
 
 
-def load_input_data(filename: str = 'input_data.json') -> Dict:
+def load_employee_data(filename: str = 'employee_data.json') -> dict:
     """
-    Load network data from JSON file.
+    Load employee data from JSON file.
     
     Args:
-        filename: Path to input data file
+        filename: Path to employee data file
         
     Returns:
-        Dictionary containing nodes, edges, and budget
+        Dictionary containing employee IDs and metadata
     """
     with open(filename, 'r') as f:
         return json.load(f)
 
 
-def optimize_network(nodes: List[int], edges: List[List[int]], budget: int) -> Dict:
+def calculate_digit_sum(number: int) -> int:
     """
-    Optimize network topology to maximize minimum bandwidth.
-    
-    This function should:
-    1. Select edges to form a spanning tree
-    2. Include all mandatory edges
-    3. Choose which edges to upgrade (within budget)
-    4. Maximize the minimum bandwidth in the final network
+    Calculate the sum of digits in a number.
     
     Args:
-        nodes: List of node IDs representing offices
-        edges: List of [from, to, bandwidth, is_mandatory] representing connections
-        budget: Integer number of available upgrades
+        number: Integer to calculate digit sum for
         
     Returns:
-        Dictionary with:
-        - 'selected_edges': List of {'from': int, 'to': int, 'upgraded': bool}
-        - 'minimum_bandwidth': int, the minimum bandwidth in the optimized network
+        Sum of all digits in the number
+        
+    Examples:
+        calculate_digit_sum(123) -> 1 + 2 + 3 = 6
+        calculate_digit_sum(10) -> 1 + 0 = 1
+        calculate_digit_sum(0) -> 0
     """
+    # TODO: Implement digit sum calculation
+    # Hint: You can use string conversion or mathematical approach
     
-    # TODO: Implement your solution here
-    
-    # Example structure (replace with your implementation):
-    selected_edges = []
-    minimum_bandwidth = 0
-    
-    # Your optimization logic goes here
-    # Hint: Consider using graph algorithms like Kruskal's or Prim's
-    # Remember to handle mandatory edges and upgrade decisions
-    
-    return {
-        'selected_edges': selected_edges,
-        'minimum_bandwidth': minimum_bandwidth
-    }
+    pass
 
 
-def validate_solution(nodes: List[int], selected_edges: List[Dict]) -> bool:
+def {{function_name}}(employee_ids: List[int]) -> int:
     """
-    Validate that the solution forms a valid spanning tree.
+    Find the smallest index where the sum of digits equals the index.
+    
+    This function implements the core security validation logic:
+    - For each employee ID at index i
+    - Calculate sum of digits in employee_ids[i]
+    - Check if digit_sum == i
+    - Return the smallest such index, or -1 if none exists
     
     Args:
-        nodes: List of all nodes
-        selected_edges: List of selected edges
+        employee_ids: List of employee ID numbers
         
     Returns:
-        True if valid spanning tree, False otherwise
+        Smallest index where digit sum equals index, or -1 if none exists
+        
+    Time Complexity: O(n * log(max_id)) where n is array length
+    Space Complexity: O(1)
     """
-    if len(selected_edges) != len(nodes) - 1:
-        return False
     
-    # Check connectivity using Union-Find or DFS
-    # TODO: Implement validation logic
+    # TODO: Implement the main logic here
     
-    return True
+    # Iterate through the array with indices
+    # For each position, calculate digit sum
+    # Check if digit sum equals current index
+    # Return first match, or -1 if no match found
+    
+    pass
+
+
+def validate_solution(employee_ids: List[int], result: int) -> bool:
+    """
+    Validate that the solution is correct.
+    
+    Args:
+        employee_ids: Original employee ID array
+        result: The returned index from find_digit_sum_index
+        
+    Returns:
+        True if solution is valid, False otherwise
+    """
+    if result == -1:
+        # Check that no valid index actually exists
+        for i in range(len(employee_ids)):
+            if calculate_digit_sum(employee_ids[i]) == i:
+                return False  # Found a valid index but function returned -1
+        return True
+    else:
+        # Check that the returned index is valid and is the smallest
+        if result < 0 or result >= len(employee_ids):
+            return False
+        
+        # Check that digit sum equals index at returned position
+        if calculate_digit_sum(employee_ids[result]) != result:
+            return False
+        
+        # Check that no smaller index is valid
+        for i in range(result):
+            if calculate_digit_sum(employee_ids[i]) == i:
+                return False
+        
+        return True
 
 
 def main():
     """
-    Main function to load data and run optimization.
+    Main function to load data and run validation.
     """
-    # Load input data
-    data = load_input_data()
+    # Load employee data
+    data = load_employee_data()
+    employee_ids = data['employee_ids']
     
-    # Extract components
-    nodes = data['nodes']
-    edges = data['edges']
-    budget = data['budget']
+    print(f"🏢 Company: {data['company_name']}")
+    print(f"👥 Processing {len(employee_ids)} employee IDs...")
     
-    # Run optimization
-    result = optimize_network(nodes, edges, budget)
+    # Run the validation
+    result = {{function_name}}(employee_ids)
     
-    # Validate solution
-    if validate_solution(nodes, result['selected_edges']):
-        print(f"Solution found! Minimum bandwidth: {result['minimum_bandwidth']}")
-        print(f"Selected edges: {len(result['selected_edges'])}")
-        print(f"Upgrades used: {sum(1 for e in result['selected_edges'] if e['upgraded'])}")
+    # Display results
+    if result != -1:
+        digit_sum = calculate_digit_sum(employee_ids[result])
+        print(f"✅ Valid employee found!")
+        print(f"   Index: {result}")
+        print(f"   Employee ID: {employee_ids[result]}")
+        print(f"   Digit sum: {digit_sum}")
+        print(f"   Validation: {digit_sum} == {result} ✓")
     else:
-        print("Invalid solution: Does not form a spanning tree!")
+        print("❌ No valid employee ID found in the system")
+    
+    # Validate the solution
+    if validate_solution(employee_ids, result):
+        print("🔒 Solution validation: PASSED")
+    else:
+        print("⚠️  Solution validation: FAILED")
     
     return result
 

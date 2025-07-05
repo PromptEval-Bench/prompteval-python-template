@@ -1,96 +1,123 @@
-# Network Infrastructure Optimization Challenge (占位符将被init-task.sh动态替换)
+# Employee ID Validation System Challenge
 
 ## Background
 {{company_scenario}}
 
 ## Company Profile
 - **Company Name**: {{company_name}}
-- **Number of Offices**: {{num_nodes}}
-- **Network Connections**: {{num_edges}}
-- **Upgrade Budget**: {{upgrade_budget}} connections
+- **Total Employees**: {{array_length}}
+- **Validation System**: Digital ID verification
+- **Security Level**: {{security_level}}
 
 ## Problem Statement
 
-Your company's network infrastructure connects all office locations through various network links. Each link has a specific bandwidth capacity (strength). Due to rapid business growth, you need to optimize the network topology to maximize the minimum bandwidth across all essential connections while staying within budget.
+Your company has implemented a new employee ID validation system where each employee is assigned a unique numeric ID. The security protocol requires that an employee's position in the system (their index) matches a specific digit-based validation rule.
 
-### Key Constraints
+### Security Rule
+An employee ID is considered "**self-validating**" if the sum of its digits equals the employee's position (index) in the company database.
 
-1. **Spanning Tree Requirement**: The final network must form a spanning tree (no cycles, all offices connected)
-2. **Mandatory Connections**: Some connections are marked as mandatory (critical business links) and MUST be included
-3. **Upgrade Limit**: You can upgrade at most {{upgrade_budget}} connections
-4. **Upgrade Effect**: Each upgrade doubles the bandwidth of a connection
-5. **Optimization Goal**: Maximize the minimum bandwidth among all connections in the final network
+### Your Task
+You need to implement a function that finds the **smallest index** where an employee ID satisfies the self-validation rule. If no such employee exists, the system should return -1 to indicate a security configuration issue.
 
 ## Technical Specifications
 
 ### Input Format
-The network data is provided in `input_data.json`:
+The employee data is provided in `employee_data.json`:
 ```json
 {
-  "nodes": [0, 1, 2, ...],           // Office IDs
-  "edges": [
-    [0, 1, 50, 1],                   // [from, to, bandwidth, is_mandatory]
-    [1, 2, 30, 0],                   // is_mandatory: 1=yes, 0=no
-    ...
-  ],
-  "budget": {{upgrade_budget}}       // Number of available upgrades
+  "employee_ids": [{{sample_array}}],
+  "company_name": "{{company_name}}",
+  "validation_threshold": {{validation_threshold}}
 }
 
 ### Expected Output
-Your function should return a dictionary:
+Your function should return an integer:
+
+- The smallest index where `sum_of_digits(employee_ids[i]) == i`
+- `-1` if no such index exists
+
+### Core Function
+Implement the `{{function_name}}()` function in `solution.py`:
 ```python
-{
-    "selected_edges": [              # List of edges in your spanning tree
-        {"from": 0, "to": 1, "upgraded": True},
-        {"from": 1, "to": 2, "upgraded": False},
-        ...
-    ],
-    "minimum_bandwidth": 60          # The minimum bandwidth in your network
-}
-```
-### Your Task
-Implement the optimize_network() function in solution.py:
-```python
-def optimize_network(nodes, edges, budget):
+def {{function_name}}(employee_ids):
     """
-    Optimize network topology to maximize minimum bandwidth.
+    Find the smallest index where digit sum equals index.
     
     Args:
-        nodes: List of node IDs representing offices
-        edges: List of [from, to, bandwidth, is_mandatory] representing connections
-        budget: Integer number of available upgrades
+        employee_ids: List of integers representing employee IDs
         
     Returns:
-        Dictionary with 'selected_edges' and 'minimum_bandwidth'
+        Integer: smallest valid index, or -1 if none exists
     """
     # Your implementation here
     pass
 ```
 
-Evaluation Criteria
-1. Correctness: Solution must form a valid spanning tree including all mandatory edges
-2. Optimization: Higher minimum bandwidth scores better
-3. Efficiency: Solution should handle networks with up to 50 offices efficiently
+### Examples
+Example 1: Standard Case
+```python
+employee_ids = [1, 3, 2]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(3) = 3 ≠ 1  
+# Index 2: sum_of_digits(2) = 2 = 2 ✓
+# Result: 2
+```
+
+Example 2: Multiple Valid Indices
+```python
+employee_ids = [1, 10, 11]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(10) = 1+0 = 1 = 1 ✓
+# Index 2: sum_of_digits(11) = 1+1 = 2 = 2 ✓
+# Result: 1 (smallest valid index)
+```
+
+Example 3: No Valid Index
+```python
+employee_ids = [1, 2, 3]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(2) = 2 ≠ 1
+# Index 2: sum_of_digits(3) = 3 ≠ 2
+# Result: -1
+```
+
+### Implementation Requirements
+## Digit Sum Calculation
+You'll need a helper function to calculate digit sum:
+```python
+def calculate_digit_sum(number):
+    """Calculate sum of digits in a number."""
+    # Convert to string and sum individual digits
+    # OR use mathematical approach with modulo operations
+    pass
+```
+
+### Constraints
+- Employee database size: 1 ≤ len(employee_ids) ≤ {{max_array_length}}
+- Employee ID range: 0 ≤ employee_ids[i] ≤ {{max_employee_id}}
+- Time complexity should be O(n × log(max_id))
+- Space complexity should be O(1)
+
+### Evaluation Criteria
+1. Correctness: Function returns correct index for all test cases
+2. Edge Cases: Handles empty arrays, single elements, large numbers
+3. Efficiency: Optimal time and space complexity
+4. Code Quality: Clean, readable, well-documented code
+
 ### Getting Started
-1. Review the network data in `input_data.json`
-2. Understand the constraints and requirements
-3. Implement your solution in `solution.py`
-4. Test locally with: python `test_solution.py`
-5. Submit your solution with: `./submit.sh`
-### Example
-For a simple 3-node network:
+1. Review the employee data in employee_data.json
+2. Understand the digit sum calculation requirement
+3. Implement your solution in solution.py
+4. Test locally with: python test_solution.py
+5. Submit your solution with: ./scripts/submit.sh
 
-- Nodes: [0, 1, 2]
-- Edges: [[0,1,40,1], [1,2,20,0], [0,2,30,0]]
-- Budget: 1
-Optimal solution:
+### Testing Tips
+- Test with single-digit and multi-digit numbers
+- Consider edge cases like 0, 10, 100, etc.
+- Verify the digit sum calculation is correct
+- Test arrays where no valid index exists
 
-- Select edges: (0,1) [mandatory] and (1,2)
-- Upgrade edge (1,2) from 20 to 40
-- Minimum bandwidth: 40
-### Tips
-- Consider which edges to include first (mandatory edges are required)
-- Think about where upgrades would have the most impact
-- Remember that doubling a weak link might be better than upgrading a strong one
-- Use graph algorithms wisely (MST variations, etc.)
-Good luck!
+### Security Note
+This validation system is part of {{company_name}}'s enhanced security protocol. Accurate implementation is crucial for maintaining system integrity.
+
+Good luck with the implementation!

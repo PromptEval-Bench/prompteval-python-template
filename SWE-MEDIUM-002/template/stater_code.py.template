@@ -1,0 +1,64 @@
+# PVLib Golden Section Search Parameter Validation Fix
+
+## Project Background
+
+**{{library_name}}** is a Python library for photovoltaic energy system modeling used by solar energy researchers and engineers. The library performs complex simulations of solar panel performance under various environmental conditions.
+
+## Issue Description
+
+{{use_case_scenario}}
+
+Since version 0.9.4, the library introduced stricter parameter validation in the `_golden_sect_DataFrame` function used for optimization. This validation now fails when processing real-world photovoltaic data that contains very small negative values due to numerical precision issues.
+
+### The Problem
+
+The current validation logic:
+```python
+if np.any(upper - lower < 0.):
+    raise ValueError('upper >= lower is required')
+```
+
+This validation is too strict and causes simulation failures when encountering:
+
+- Very low effective irradiance values (e.g., `1.341083e-17` at sunrise/sunset)
+- Small negative `v_oc` (open-circuit voltage) values close to machine precision
+- Arrays like: `[-8.43546518e-15, 9.46949758e-16, ...]`
+
+## Impact
+- Bifacial solar panel simulations crash with `ValueError: upper >= lower is required`
+- Large-scale daily solar analysis workflows fail due to edge cases
+- Previously working code breaks after library upgrade
+
+### Your Task
+Fix the parameter validation in the `_golden_sect_DataFrame` function to handle numerical precision edge cases while maintaining algorithmic correctness.
+
+### Requirements
+1. Maintain API compatibility - Don't change function signatures
+2. Handle edge cases gracefully - Allow for small numerical precision errors
+3. Preserve correctness - Golden section search must still work for normal cases
+4. Reject invalid inputs - Still catch genuinely invalid parameter combinations
+
+### Implementation Guidelines
+Consider these approaches:
+- Use tolerance-based validation instead of strict inequality
+- Handle very small negative values that are likely numerical noise
+- Distinguish between meaningful bound violations vs precision artifacts
+- Log warnings for edge cases using {{log_level}} level logging
+    
+### Files to Modify
+- `tools.py` - Contains the `_golden_sect_DataFrame` function that needs fixing
+- `test_tools.py` - Add comprehensive tests for your fix
+
+### Key Considerations
+- What constitutes "slightly negative" vs "genuinely invalid"?
+- How to balance numerical robustness with mathematical correctness?
+- When to raise errors vs handle gracefully vs log warnings?
+
+### Expected Outcome
+After your fix:
+
+- Solar simulations with edge case irradiance values should complete successfully
+- Normal optimization cases should continue working without changes
+- Invalid parameter combinations should still raise appropriate errors
+- Edge cases should be handled transparently with optional logging
+Your solution will help solar energy researchers process complete daily irradiance datasets without manual filtering of numerical edge cases.

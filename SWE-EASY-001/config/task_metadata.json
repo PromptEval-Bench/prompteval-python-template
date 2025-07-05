@@ -1,36 +1,36 @@
 {
   "task_id": "SWE-EASY-001",
   "category": "algorithm",
-  "title": "Network Infrastructure Optimization",
-  "subcategory": "spanning_tree_optimization",
-  "difficulty": "hard",
-  "estimated_time_minutes": 50,
-  "points": 100,
+  "title": "Employee ID Validation System",
+  "subcategory": "array_processing",
+  "difficulty": "easy", 
+  "estimated_time_minutes": 25,
+  "points": 50,
   "tags": [
-    "graphs",
-    "optimization",
-    "spanning-tree",
-    "greedy-algorithms",
-    "minimum-spanning-tree"
+    "arrays",
+    "digit-manipulation",
+    "linear-search",
+    "mathematical-operations",
+    "string-processing"
   ],
   "skills_assessed": [
-    "graph_theory",
-    "algorithm_design",
-    "optimization_strategies",
-    "complexity_analysis",
-    "edge_case_handling"
+    "array_iteration",
+    "mathematical_thinking",
+    "edge_case_handling",
+    "algorithm_implementation",
+    "input_validation"
   ],
   "prerequisites": [
-    "understanding_of_graphs",
-    "mst_algorithms",
-    "basic_optimization"
+    "basic_loops",
+    "array_indexing",
+    "mathematical_operations"
   ],
   "learning_outcomes": [
-    "Apply MST algorithms with constraints",
-    "Optimize under multiple objectives",
-    "Handle real-world network problems"
+    "Process arrays with index-based conditions",
+    "Implement digit sum calculations",
+    "Handle edge cases in search algorithms"
   ],
-  "original_url": "https://leetcode.cn/problems/maximize-spanning-tree-stability-with-upgrades/",
+  "original_url": "https://leetcode.com/problems/smallest-index-with-digit-sum-equal-to-index/",
   "version": "1.0.0",
-  "last_updated": "2025-07-04"
+  "last_updated": "2025-07-05"
 }

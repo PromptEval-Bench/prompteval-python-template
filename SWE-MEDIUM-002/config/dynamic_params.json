@@ -1,0 +1,55 @@
+{
+  "rule_based_params": {
+    "handler_type": {
+      "type": "choice",
+      "options": ["StreamHandler", "FileHandler", "ConsoleHandler"],
+      "description": "Type of logging handler mentioned in examples"
+    },
+    "log_level": {
+      "type": "choice", 
+      "options": ["DEBUG", "INFO", "WARNING", "ERROR"],
+      "description": "Default log level mentioned in problem"
+    },
+    "module_complexity": {
+      "type": "integer",
+      "min": 3,
+      "max": 8,
+      "description": "Number of configuration flags in the module"
+    },
+    "tolerance_precision": {
+      "type": "choice",
+      "options": ["1e-15", "1e-14", "1e-13", "1e-12"],
+      "description": "Numerical tolerance for edge case handling"
+    },
+    "error_threshold": {
+      "type": "float",
+      "min": 1e-16,
+      "max": 1e-10,
+      "description": "Threshold for considering values as numerical noise"
+    }
+  },
+  "llm_variations": {
+    "library_name": {
+      "prompt": "Generate a realistic Python library name for solar energy or photovoltaic systems. Be professional and descriptive. Examples: 'SolarSim', 'PVCore', 'PhotoVoltaic', 'SolarAnalytics'. Return only the library name, nothing else.",
+      "max_tokens": 15,
+      "temperature": 0.7
+    },
+    "use_case_scenario": {
+      "prompt": "Write a 2-3 sentence scenario describing how a solar energy researcher is using the {library_name} library for bifacial panel simulations and encountering errors with very low irradiance values at sunrise/sunset. Include specific symptoms like ValueError exceptions. Be technical but concise.",
+      "max_tokens": 120,
+      "temperature": 0.6,
+      "variables": ["library_name"]
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_test_coverage": true,
+    "maintain_api_compatibility": true,
+    "follow_logging_best_practices": true,
+    "preserve_numerical_accuracy": true,
+    "handle_edge_cases_gracefully": true
+  }
+}

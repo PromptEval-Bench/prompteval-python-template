@@ -1,9 +1,9 @@
 #!/bin/bash
-# Employee ID Validation Solution Submission Script
+# Solution Submission Script
 
 set -e  # Exit on error
 
-echo "📤 Preparing to submit your Employee ID Validation solution..."
+echo "📤 Preparing to submit your solution..."
 
 # Check if required files exist
 if [ ! -f "solution.py" ]; then
@@ -43,7 +43,7 @@ mkdir -p "$SUBMISSION_DIR"
 
 # Copy solution files
 cp solution.py "$SUBMISSION_DIR/"
-cp employee_data.json "$SUBMISSION_DIR/"
+cp input_data.json "$SUBMISSION_DIR/"
 cp .submission_metadata.json "$SUBMISSION_DIR/"
 cp .task_metadata.json "$SUBMISSION_DIR/" 2>/dev/null || true
 
@@ -91,14 +91,14 @@ if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
     echo "📋 Submission Details:"
     echo "$RESPONSE_BODY" | jq . 2>/dev/null || echo "$RESPONSE_BODY"
     echo ""
-    echo "Your Employee ID Validation solution has been submitted for evaluation."
-    echo "Security verification will be completed shortly."
+    echo "Your solution has been submitted for evaluation."
+    echo "You will receive feedback once processing is complete."
 else
     echo "❌ Submission failed!"
     echo "HTTP Status: $HTTP_CODE"
     echo "Response: $RESPONSE_BODY"
     echo ""
     echo "Please check your solution and try again."
-    echo "If the problem persists, contact the security team."
+    echo "If the problem persists, contact support."
     exit 1
 fi
