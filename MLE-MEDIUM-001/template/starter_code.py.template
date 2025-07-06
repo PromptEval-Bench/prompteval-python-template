@@ -1,0 +1,379 @@
+#!/usr/bin/env python3
+"""
+{{library_name}} - Minimum Weighted Subgraph Problem
+Graph Theory and Tree Algorithms Challenge
+
+Problem: Find minimum weight subtree connecting three specific nodes
+Author: [Your Name]
+Date: {{current_date}}
+
+Challenge: Given a weighted tree and queries with (src1, src2, dest),
+find the minimum weight subtree that allows reaching dest from both sources.
+"""
+
+from typing import List, Dict, Tuple, Set
+from collections import defaultdict, deque
+import heapq
+import sys
+
+# Set random seed for reproducibility
+import random
+random.seed({{random_seed}})
+
+class TreePathSolver:
+    """
+    Solver for minimum weighted subtree problem on trees.
+    
+    This class provides the foundation for solving the problem.
+    You need to implement the core algorithm.
+    """
+    
+    def __init__(self):
+        self.graph = defaultdict(list)
+        self.n = 0
+        
+    def build_graph(self, edges: List[List[int]]) -> None:
+        """
+        Build adjacency list representation of the tree.
+        
+        Args:
+            edges: List of [u, v, weight] representing tree edges
+        """
+        self.n = len(edges) + 1
+        self.graph = defaultdict(list)
+        
+        for u, v, weight in edges:
+            self.graph[u].append((v, weight))
+            self.graph[v].append((u, weight))
+    
+    def find_path(self, start: int, end: int) -> List[Tuple[int, int]]:
+        """
+        Find the path between two nodes in the tree.
+        
+        Args:
+            start: Starting node
+            end: Ending node
+            
+        Returns:
+            List of (node, edge_weight) pairs representing the path
+        """
+        if start == end:
+            return [(start, 0)]
+        
+        # BFS to find path in tree
+        queue = deque([(start, [])])
+        visited = set([start])
+        
+        while queue:
+            node, path = queue.popleft()
+            
+            for neighbor, weight in self.graph[node]:
+                if neighbor == end:
+                    return path + [(node, 0), (neighbor, weight)]
+                
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append((neighbor, path + [(node, 0 if not path else weight)]))
+        
+        return []  # Should not reach here in a valid tree
+    
+    def path_weight(self, path: List[Tuple[int, int]]) -> int:
+        """Calculate total weight of a path."""
+        return sum(weight for _, weight in path[1:])  # Skip first node weight
+    
+    def get_path_edges(self, start: int, end: int) -> Set[Tuple[int, int]]:
+        """
+        Get the set of edges in the path between start and end.
+        
+        Returns:
+            Set of (min(u,v), max(u,v)) tuples representing edges
+        """
+        # TODO: Implement this method
+        # This should return the edges used in the path from start to end
+        pass
+    
+    def minimumWeight(self, edges: List[List[int]], queries: List[List[int]]) -> List[int]:
+        """
+        Main solution function.
+        
+        Args:
+            edges: Tree edges as [u, v, weight]
+            queries: List of [src1, src2, dest] queries
+            
+        Returns:
+            List of minimum weights for each query
+        """
+        self.build_graph(edges)
+        results = []
+        
+        for src1, src2, dest in queries:
+            # TODO: Implement the core algorithm
+            # 
+            # Key insight: The minimum subtree that connects all three nodes
+            # must include:
+            # 1. Path from src1 to dest
+            # 2. Path from src2 to dest
+            # 3. Potentially some shared edges
+            #
+            # Since it's a tree, we need to find the optimal way to combine
+            # these paths to minimize total weight.
+            
+            # Basic approach (inefficient - you should optimize this):
+            # 1. Find path from src1 to dest
+            # 2. Find path from src2 to dest  
+            # 3. Find the minimum set of edges that covers both paths
+            
+            # Placeholder implementation (replace with your solution)
+            path1_weight = self._get_distance(src1, dest)
+            path2_weight = self._get_distance(src2, dest)
+            
+            # This is incorrect - just a placeholder
+            # You need to account for shared edges properly
+            result = path1_weight + path2_weight
+            results.append(result)
+        
+        return results
+    
+    def _get_distance(self, start: int, end: int) -> int:
+        """
+        Calculate shortest distance between two nodes in the tree.
+        Helper method for basic implementation.
+        """
+        if start == end:
+            return 0
+        
+        # BFS to find shortest path in tree
+        queue = deque([(start, 0)])
+        visited = set([start])
+        
+        while queue:
+            node, dist = queue.popleft()
+            
+            for neighbor, weight in self.graph[node]:
+                if neighbor == end:
+                    return dist + weight
+                
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append((neighbor, dist + weight))
+        
+        return float('inf')  # Should not reach here in a valid tree
+
+
+def minimumWeight(edges: List[List[int]], queries: List[List[int]]) -> List[int]:
+    """
+    Main function to solve the minimum weighted subgraph problem.
+    
+    This is the function that will be called for evaluation.
+    """
+    solver = TreePathSolver()
+    return solver.minimumWeight(edges, queries)
+
+
+def test_examples():
+    """Test the solution with provided examples."""
+    print("🧪 Testing solution with examples...")
+    
+    # Example 1
+    edges1 = [[0,1,2],[1,2,3],[1,3,5],[1,4,4],[2,5,6]]
+    queries1 = [[2,3,4],[0,2,5]]
+    expected1 = [12, 11]
+    
+    result1 = minimumWeight(edges1, queries1)
+    print(f"Example 1:")
+    print(f"  Expected: {expected1}")
+    print(f"  Got:      {result1}")
+    print(f"  Correct:  {result1 == expected1}")
+    
+    # Example 2  
+    edges2 = [[1,0,8],[0,2,7]]
+    queries2 = [[0,1,2]]
+    expected2 = [15]
+    
+    result2 = minimumWeight(edges2, queries2)
+    print(f"\nExample 2:")
+    print(f"  Expected: {expected2}")
+    print(f"  Got:      {result2}")
+    print(f"  Correct:  {result2 == expected2}")
+    
+    return result1 == expected1 and result2 == expected2
+
+
+def generate_test_case(n: int = 10) -> Tuple[List[List[int]], List[List[int]]]:
+    """
+    Generate a random test case for development and testing.
+    
+    Args:
+        n: Number of nodes in the tree
+        
+    Returns:
+        Tuple of (edges, queries)
+    """
+    print(f"🎲 Generating random test case with {n} nodes...")
+    
+    # Generate random tree
+    edges = []
+    
+    # Create a spanning tree using random connections
+    connected = {0}
+    remaining = set(range(1, n))
+    
+    while remaining:
+        # Pick random node from connected set
+        from_node = random.choice(list(connected))
+        # Pick random node from remaining set
+        to_node = random.choice(list(remaining))
+        # Random weight
+        weight = random.randint(1, 100)
+        
+        edges.append([from_node, to_node, weight])
+        connected.add(to_node)
+        remaining.remove(to_node)
+    
+    # Generate random queries
+    num_queries = min(5, n // 2)
+    queries = []
+    
+    for _ in range(num_queries):
+        # Pick 3 distinct random nodes
+        nodes = random.sample(range(n), 3)
+        src1, src2, dest = nodes
+        queries.append([src1, src2, dest])
+    
+    print(f"  Generated {len(edges)} edges and {len(queries)} queries")
+    return edges, queries
+
+
+def visualize_tree(edges: List[List[int]], highlight_query: List[int] = None):
+    """
+    Simple text visualization of the tree structure.
+    
+    Args:
+        edges: Tree edges
+        highlight_query: Optional [src1, src2, dest] to highlight
+    """
+    print("🌳 Tree Structure:")
+    
+    # Build adjacency list
+    graph = defaultdict(list)
+    for u, v, w in edges:
+        graph[u].append((v, w))
+        graph[v].append((u, w))
+    
+    # Simple DFS traversal for visualization
+    visited = set()
+    
+    def dfs_print(node, depth=0, parent=-1):
+        if node in visited:
+            return
+        visited.add(node)
+        
+        indent = "  " * depth
+        marker = ""
+        if highlight_query:
+            src1, src2, dest = highlight_query
+            if node == dest:
+                marker = " (DEST)"
+            elif node == src1:
+                marker = " (SRC1)"
+            elif node == src2:
+                marker = " (SRC2)"
+        
+        print(f"{indent}Node {node}{marker}")
+        
+        for neighbor, weight in graph[node]:
+            if neighbor != parent:
+                print(f"{indent}├─ edge to {neighbor} (weight: {weight})")
+                dfs_print(neighbor, depth + 1, node)
+    
+    # Start DFS from node 0
+    if graph:
+        dfs_print(0)
+
+
+def main():
+    """Main development and testing pipeline."""
+    print("🚀 {{library_name}} - Minimum Weighted Subgraph Challenge")
+    print("=" * 70)
+    
+    # Test with examples
+    print("\n" + "=" * 50)
+    print("TESTING WITH PROVIDED EXAMPLES")
+    print("=" * 50)
+    
+    examples_pass = test_examples()
+    
+    if not examples_pass:
+        print("\n❌ Basic examples failed! Check your implementation.")
+        print("Focus on getting the basic algorithm correct first.")
+    else:
+        print("\n✅ Basic examples passed!")
+    
+    # Generate and test random cases
+    print("\n" + "=" * 50)
+    print("TESTING WITH RANDOM CASES")
+    print("=" * 50)
+    
+    # Small test case
+    edges, queries = generate_test_case(6)
+    print(f"\nSmall test case:")
+    print(f"Edges: {edges}")
+    print(f"Queries: {queries}")
+    
+    if queries:
+        print(f"\nVisualizing first query: {queries[0]}")
+        visualize_tree(edges, queries[0])
+    
+    try:
+        results = minimumWeight(edges, queries)
+        print(f"\nResults: {results}")
+    except Exception as e:
+        print(f"\n❌ Error running test case: {e}")
+    
+    # Performance test
+    print("\n" + "=" * 50)
+    print("PERFORMANCE TESTING")
+    print("=" * 50)
+    
+    print("Testing with larger cases...")
+    for size in [50, 100]:
+        try:
+            edges, queries = generate_test_case(size)
+            print(f"\nTesting n={size}, queries={len(queries)}...")
+            
+            import time
+            start_time = time.time()
+            results = minimumWeight(edges, queries)
+            end_time = time.time()
+            
+            print(f"  ✅ Completed in {end_time - start_time:.3f} seconds")
+            print(f"  Results: {results[:3]}{'...' if len(results) > 3 else ''}")
+            
+        except Exception as e:
+            print(f"  ❌ Failed: {e}")
+    
+    print("\n" + "=" * 70)
+    print("DEVELOPMENT SUMMARY")
+    print("=" * 70)
+    
+    if examples_pass:
+        print("✅ Your solution handles basic cases correctly")
+        print("🎯 Focus areas for optimization:")
+        print("   - Improve algorithm efficiency for larger inputs")
+        print("   - Consider preprocessing techniques for multiple queries") 
+        print("   - Optimize tree traversal and path finding")
+    else:
+        print("❌ Your solution needs work on basic functionality")
+        print("🎯 Focus areas:")
+        print("   - Understand the problem requirements")
+        print("   - Implement correct path finding in trees")
+        print("   - Handle edge weight calculations properly")
+    
+    print(f"\n📝 Next steps:")
+    print(f"   1. Review your algorithm in the TreePathSolver class")
+    print(f"   2. Test with: python starter_code.py")
+    print(f"   3. Submit when ready: ./scripts/submit.sh")
+
+
+if __name__ == "__main__":
+    main()

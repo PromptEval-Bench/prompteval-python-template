@@ -1,0 +1,41 @@
+{
+  "rule_based_params": {
+    "random_seed": {
+      "type": "integer", 
+      "min": 42,
+      "max": 100,
+      "description": "Random seed for test case generation"
+    }
+  },
+  "llm_variations": {
+    "library_name": {
+      "prompt": "Generate a professional name for a graph algorithms and optimization library. Examples: 'GraphOptim', 'TreeSolver', 'PathFinder', 'OptimalGraph'. Return only the name.",
+      "max_tokens": 15,
+      "temperature": 0.7
+    },
+    "algorithm_approach": {
+      "prompt": "Suggest a high-level algorithmic approach for finding minimum weight subtrees in trees that connect three specific nodes. Be technical but concise. One sentence.",
+      "max_tokens": 80,
+      "temperature": 0.6
+    },
+    "optimization_technique": {
+      "prompt": "Suggest one optimization technique suitable for handling multiple tree path queries efficiently. Examples: 'LCA preprocessing', 'dynamic programming', 'tree decomposition'. Return only the technique name.",
+      "max_tokens": 15,
+      "temperature": 0.5
+    },
+    "key_insight": {
+      "prompt": "Provide one key algorithmic insight for solving the minimum weighted subtree problem on trees. Focus on the mathematical or structural property that makes the solution efficient. One sentence.",
+      "max_tokens": 60,
+      "temperature": 0.4
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "maintain_problem_accuracy": true,
+    "provide_algorithmic_guidance": true,
+    "support_multiple_approaches": true
+  }
+}

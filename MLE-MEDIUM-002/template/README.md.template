@@ -1,0 +1,123 @@
+# Employee ID Validation System Challenge
+
+## Background
+{{company_scenario}}
+
+## Company Profile
+- **Company Name**: {{company_name}}
+- **Total Employees**: {{array_length}}
+- **Validation System**: Digital ID verification
+- **Security Level**: {{security_level}}
+
+## Problem Statement
+
+Your company has implemented a new employee ID validation system where each employee is assigned a unique numeric ID. The security protocol requires that an employee's position in the system (their index) matches a specific digit-based validation rule.
+
+### Security Rule
+An employee ID is considered "**self-validating**" if the sum of its digits equals the employee's position (index) in the company database.
+
+### Your Task
+You need to implement a function that finds the **smallest index** where an employee ID satisfies the self-validation rule. If no such employee exists, the system should return -1 to indicate a security configuration issue.
+
+## Technical Specifications
+
+### Input Format
+The employee data is provided in `employee_data.json`:
+```json
+{
+  "employee_ids": [{{sample_array}}],
+  "company_name": "{{company_name}}",
+  "validation_threshold": {{validation_threshold}}
+}
+
+### Expected Output
+Your function should return an integer:
+
+- The smallest index where `sum_of_digits(employee_ids[i]) == i`
+- `-1` if no such index exists
+
+### Core Function
+Implement the `{{function_name}}()` function in `solution.py`:
+```python
+def {{function_name}}(employee_ids):
+    """
+    Find the smallest index where digit sum equals index.
+    
+    Args:
+        employee_ids: List of integers representing employee IDs
+        
+    Returns:
+        Integer: smallest valid index, or -1 if none exists
+    """
+    # Your implementation here
+    pass
+```
+
+### Examples
+Example 1: Standard Case
+```python
+employee_ids = [1, 3, 2]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(3) = 3 ≠ 1  
+# Index 2: sum_of_digits(2) = 2 = 2 ✓
+# Result: 2
+```
+
+Example 2: Multiple Valid Indices
+```python
+employee_ids = [1, 10, 11]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(10) = 1+0 = 1 = 1 ✓
+# Index 2: sum_of_digits(11) = 1+1 = 2 = 2 ✓
+# Result: 1 (smallest valid index)
+```
+
+Example 3: No Valid Index
+```python
+employee_ids = [1, 2, 3]
+# Index 0: sum_of_digits(1) = 1 ≠ 0
+# Index 1: sum_of_digits(2) = 2 ≠ 1
+# Index 2: sum_of_digits(3) = 3 ≠ 2
+# Result: -1
+```
+
+### Implementation Requirements
+## Digit Sum Calculation
+You'll need a helper function to calculate digit sum:
+```python
+def calculate_digit_sum(number):
+    """Calculate sum of digits in a number."""
+    # Convert to string and sum individual digits
+    # OR use mathematical approach with modulo operations
+    pass
+```
+
+### Constraints
+- Employee database size: 1 ≤ len(employee_ids) ≤ {{max_array_length}}
+- Employee ID range: 0 ≤ employee_ids[i] ≤ {{max_employee_id}}
+- Time complexity should be O(n × log(max_id))
+- Space complexity should be O(1)
+
+### Evaluation Criteria
+1. Correctness: Function returns correct index for all test cases
+2. Edge Cases: Handles empty arrays, single elements, large numbers
+3. Efficiency: Optimal time and space complexity
+4. Code Quality: Clean, readable, well-documented code
+
+### Getting Started
+1. Review the employee data in employee_data.json
+2. Understand the digit sum calculation requirement
+3. Implement your solution in solution.py
+4. Test locally with: python test_solution.py
+5. Submit your solution with: ./scripts/submit.sh
+
+### Testing Tips
+- Test with single-digit and multi-digit numbers
+- Consider edge cases like 0, 10, 100, etc.
+- Verify the digit sum calculation is correct
+- Test arrays where no valid index exists
+
+### Security Note
+This validation system is part of {{company_name}}'s enhanced security protocol. Accurate implementation is crucial for maintaining system integrity.
+
+Good luck with the implementation!

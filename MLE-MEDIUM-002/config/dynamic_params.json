@@ -1,0 +1,42 @@
+{
+  "rule_based_params": {
+    "random_seed": {
+      "type": "integer", 
+      "min": 42,
+      "max": 100,
+      "description": "Random seed for reproducibility"
+    }
+  },
+  "llm_variations": {
+    "library_name": {
+      "prompt": "Generate a realistic name for a computational materials science platform. Be professional and scientific. Examples: 'MatMLab', 'CrystalPredict', 'MaterialsAI'. Return only the name, nothing else.",
+      "max_tokens": 15,
+      "temperature": 0.7
+    },
+    "use_case_scenario": {
+      "prompt": "Write a 2-3 sentence scenario describing how a materials scientist is using {library_name} to predict material properties from crystal structure data. Be technical but accessible.",
+      "max_tokens": 120,
+      "temperature": 0.6,
+      "variables": ["library_name"]
+    },
+    "model_approach": {
+      "prompt": "Suggest a machine learning approach suitable for materials property prediction. One technical term only. Examples: 'ensemble methods', 'neural networks', 'kernel methods'.",
+      "max_tokens": 10,
+      "temperature": 0.5
+    },
+    "feature_engineering": {
+      "prompt": "Suggest one specific feature engineering approach for crystalline materials data. Examples: 'compositional', 'geometric', 'structural'.",
+      "max_tokens": 8,
+      "temperature": 0.4
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_data_accessibility": true,
+    "maintain_scientific_accuracy": true,
+    "preserve_original_task_format": true
+  }
+}

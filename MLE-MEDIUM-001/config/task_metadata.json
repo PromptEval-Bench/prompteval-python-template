@@ -1,0 +1,41 @@
+{
+  "task_id": "ALGO-GRAPH-3553",
+  "category": "algorithms",
+  "title": "Minimum Weighted Subgraph With Required Paths",
+  "subcategory": "graph_tree_algorithms",
+  "difficulty": "hard",
+  "estimated_time_minutes": 90,
+  "points": 200,
+  "tags": [
+    "graph-theory",
+    "tree-algorithms",
+    "shortest-path",
+    "optimization",
+    "dynamic-programming",
+    "query-processing"
+  ],
+  "skills_assessed": [
+    "tree_traversal",
+    "path_finding",
+    "graph_algorithms",
+    "optimization_techniques",
+    "algorithmic_thinking",
+    "complexity_analysis"
+  ],
+  "prerequisites": [
+    "graph_theory_basics",
+    "tree_data_structures",
+    "bfs_dfs_algorithms",
+    "shortest_path_algorithms"
+  ],
+  "learning_outcomes": [
+    "Solve complex tree optimization problems",
+    "Apply efficient graph traversal techniques",
+    "Handle multiple query optimization",
+    "Understand tree path properties"
+  ],
+  "original_source": "https://leetcode.cn/problems/minimum-weighted-subgraph-with-the-required-paths-ii/",
+  "problem_type": "tree_optimization",
+  "version": "1.0.0",
+  "last_updated": "2025-07-05"
+}
