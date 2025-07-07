@@ -1,0 +1,55 @@
+{
+  "rule_based_params": {
+    "train_test_split": {
+      "type": "float",
+      "min": 0.1,
+      "max": 0.15,
+      "description": "Percentage of data to use for test set"
+    },
+    "random_seed": {
+      "type": "integer",
+      "min": 42,
+      "max": 100,
+      "step": 1,
+      "description": "Random seed for reproducibility"
+    },
+    "class_balance_threshold": {
+      "type": "float",
+      "min": 0.05,
+      "max": 0.3,
+      "description": "Expected minority class ratio"
+    }
+  },
+  "llm_variations": {
+    "platform_name": {
+      "prompt": "Generate a realistic social media content moderation platform name. Examples: 'SafeSpace', 'CommentGuard', 'ToxicityShield', 'CleanChat'. Return only the platform name, nothing else.",
+      "max_tokens": 15,
+      "temperature": 0.8
+    },
+    "company_scenario": {
+      "prompt": "Write a 2-3 sentence business scenario about how {platform_name} helps social media companies automatically detect insulting comments to maintain healthy online communities. Include specific benefits like user safety and moderation efficiency.",
+      "max_tokens": 120,
+      "temperature": 0.6,
+      "variables": ["platform_name"]
+    },
+    "model_approach": {
+      "prompt": "Suggest a machine learning approach for text toxicity detection. Examples: 'Logistic Regression with TF-IDF', 'LSTM with word embeddings', 'Ensemble of SVM and Random Forest'. Return only the approach name.",
+      "max_tokens": 20,
+      "temperature": 0.5
+    },
+    "feature_technique": {
+      "prompt": "Suggest one advanced feature engineering technique for toxicity detection. Examples: 'sentiment polarity scoring', 'profanity pattern matching', 'character-level n-grams'. Return only the technique name.",
+      "max_tokens": 15,
+      "temperature": 0.4
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_data_quality": true,
+    "maintain_class_balance": true,
+    "preserve_evaluation_integrity": true
+  }
+}

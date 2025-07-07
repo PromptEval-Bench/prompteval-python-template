@@ -1,0 +1,41 @@
+{
+  "task_id": "NLP-MODERATE-003",
+  "category": "nlp",
+  "title": "Social Media Insult Detection",
+  "subcategory": "content_moderation",
+  "difficulty": "medium",
+  "estimated_time_minutes": 60,
+  "points": 120,
+  "tags": [
+    "text-classification",
+    "content-moderation",
+    "toxicity-detection",
+    "social-media",
+    "binary-classification",
+    "auc-optimization"
+  ],
+  "skills_assessed": [
+    "text_preprocessing",
+    "feature_engineering",
+    "binary_classification",
+    "imbalanced_data_handling",
+    "model_evaluation",
+    "content_moderation_ethics"
+  ],
+  "prerequisites": [
+    "basic_nlp",
+    "text_classification",
+    "scikit_learn",
+    "pandas_data_manipulation"
+  ],
+  "learning_outcomes": [
+    "Build content moderation systems",
+    "Handle sensitive text classification",
+    "Apply AUC optimization techniques",
+    "Understand toxicity detection challenges"
+  ],
+  "source": "mle-bench",
+  "original_url": "https://www.kaggle.com/c/detecting-insults-in-social-commentary",
+  "version": "1.0.0",
+  "last_updated": "2025-07-07"
+}

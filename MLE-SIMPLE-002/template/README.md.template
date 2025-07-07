@@ -1,0 +1,77 @@
+# {{platform_name}} - Insult Detection Challenge
+
+**Author:** [Your Name]  
+**Date:** {{current_date}}  
+**Task:** Binary Classification for Social Comment Moderation
+
+## 🎯 Challenge Overview
+
+{{company_scenario}}
+
+## 📊 Task
+
+Detect if a comment is insulting.
+
+## 📈 Metric
+
+Area under the Receiver Operating Curve (AUC).
+
+## 📋 Submission Format
+
+Your predictions should be a number in the range [0,1].
+
+See 'sample_submission.csv' for the correct format.
+
+## 📊 Dataset
+
+The label is either 0 meaning a **neutral** comment, or 1 meaning an **insulting** comment.
+
+The first attribute is the time at which the comment was made. It is sometimes blank, meaning an accurate timestamp is not possible. It is in the form "YYYYMMDDhhmmss" and then the Z character.
+
+The second attribute is the unicode-escaped text of the content, surrounded by double-quotes. The content is mostly english language comments, with some occasional formatting.
+
+## Guidelines
+
+- We are looking for comments that are intended to be insulting to a person who is a part of the larger blog/forum conversation. 
+- We are NOT looking for insults directed to non-participants (such as celebrities, public figures etc.). 
+- Insults could contain profanity, racial slurs, or other offensive language. But often times, they do not. 
+- Comments which contain profanity or racial slurs, but are not necessarily insulting to another person are considered not insulting.
+- The insulting nature of the comment should be obvious, and not subtle. 
+
+There may be a small amount of noise in the labels as they have not been meticulously cleaned. However, contestants can be confident the error in the training and testing data is `< 1%`.
+
+## 📋 Files Provided
+
+- `train.csv` - Training data with labels
+- `test.csv` - Test data without labels  
+- `sample_submission.csv` - Submission format example
+
+## 🚀 Getting Started
+
+### 1. Explore the Data
+```bash
+python explore_data.py
+```
+
+2. Run Starter Code
+```bash
+python starter_code.py
+```
+
+3. Approach Suggestions
+Feature Engineering:
+
+- {{feature_technique}}
+- TF-IDF vectorization
+- Text preprocessing
+Model Approach:
+
+- {{model_approach}}
+- Handle class imbalance
+- Optimize for AUC metric
+
+### Submission
+Create a CSV file with columns:
+
+- `Id`: Comment identifier
+- `Insult`: Probability of being insulting (0.0 to 1.0)
