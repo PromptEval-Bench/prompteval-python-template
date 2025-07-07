@@ -1,0 +1,68 @@
+{
+  "rule_based_params": {
+    "image_count_train": {
+      "type": "integer",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "description": "Number of training images"
+    },
+    "image_count_test": {
+      "type": "integer",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "description": "Number of test images"
+    },
+    "image_size": {
+      "type": "choice",
+      "options": [64, 96, 128],
+      "description": "Image dimensions (square images)"
+    },
+    "noise_level": {
+      "type": "float",
+      "min": 0.1,
+      "max": 0.3,
+      "description": "Noise intensity factor"
+    },
+    "random_seed": {
+      "type": "integer",
+      "min": 42,
+      "max": 100,
+      "step": 1,
+      "description": "Random seed for reproducibility"
+    }
+  },
+  "llm_variations": {
+    "application_name": {
+      "prompt": "Generate a realistic document processing application name. Examples: 'DocuClean', 'TextRestore', 'ScanFix', 'ClearText'. Return only the application name, nothing else.",
+      "max_tokens": 15,
+      "temperature": 0.8
+    },
+    "use_case_scenario": {
+      "prompt": "Write a 2-3 sentence business scenario about how {application_name} helps digitize old documents by removing scanning artifacts and noise from text images. Include specific benefits like improved OCR accuracy and document preservation.",
+      "max_tokens": 120,
+      "temperature": 0.6,
+      "variables": ["application_name"]
+    },
+    "denoising_technique": {
+      "prompt": "Suggest an image denoising technique for text documents. Examples: 'Gaussian filtering', 'bilateral filtering', 'median filtering', 'morphological operations'. Return only the technique name.",
+      "max_tokens": 20,
+      "temperature": 0.5
+    },
+    "preprocessing_step": {
+      "prompt": "Suggest one preprocessing step for noisy text images. Examples: 'histogram equalization', 'adaptive thresholding', 'edge preservation', 'contrast enhancement'. Return only the step name.",
+      "max_tokens": 15,
+      "temperature": 0.4
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_image_quality": true,
+    "maintain_text_readability": true,
+    "preserve_evaluation_format": true
+  }
+}

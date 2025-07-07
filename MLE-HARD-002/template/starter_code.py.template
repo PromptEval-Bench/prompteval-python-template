@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""
+{{platform_name}} - Social Media Insult Detection
+Starter Code Template
+
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import pandas as pd
+import numpy as np
+import re
+from sklearn.metrics import roc_auc_score
+
+# Set random seed for reproducibility
+np.random.seed({{random_seed}})
+
+def load_data():
+    """Load the training and test datasets"""
+    train_df = pd.read_csv('train.csv')
+    test_df = pd.read_csv('test.csv')
+    
+    print(f"Training samples: {len(train_df)}")
+    print(f"Test samples: {len(test_df)}")
+    
+    return train_df, test_df
+
+def explore_data(train_df):
+    """Basic data exploration"""
+    print("\nClass distribution:")
+    print(train_df['Insult'].value_counts())
+    print(f"Insult rate: {train_df['Insult'].mean():.3f}")
+    
+    print("\nSample comments:")
+    print("Neutral comments:")
+    neutral_samples = train_df[train_df['Insult'] == 0]['Comment'].head(3)
+    for i, comment in enumerate(neutral_samples, 1):
+        print(f"  {i}. {comment[:100]}...")
+    
+    print("\nInsulting comments:")
+    insult_samples = train_df[train_df['Insult'] == 1]['Comment'].head(3)
+    for i, comment in enumerate(insult_samples, 1):
+        print(f"  {i}. {comment[:100]}...")
+
+def preprocess_text(text):
+    """Basic text preprocessing - implement your own logic here"""
+    if pd.isna(text):
+        return ""
+    
+    text = str(text)
+    
+    # TODO: Add your text preprocessing steps here
+    # Examples:
+    # - Handle unicode escaping
+    # - Remove/normalize timestamps
+    # - Clean special characters
+    # - Normalize case
+    
+    return text.strip()
+
+def extract_features(df):
+    """Extract features from text - implement your feature engineering here"""
+    
+    # TODO: Implement your feature extraction logic
+    # Ideas:
+    # - TF-IDF vectors
+    # - N-gram features  
+    # - Text length features
+    # - {{feature_technique}}
+    # - Sentiment scores
+    # - Custom vocabulary features
+    
+    # Placeholder: return basic text statistics
+    features = pd.DataFrame()
+    features['comment_length'] = df['Comment'].str.len()
+    features['word_count'] = df['Comment'].str.split().str.len()
+    
+    return features
+
+def train_model(X_train, y_train):
+    """Train your model here"""
+    
+    # TODO: Implement your model training
+    # Options:
+    # - {{model_approach}}
+    # - Logistic Regression
+    # - Random Forest
+    # - SVM
+    # - Neural Networks
+    # - Ensemble methods
+    
+    # Placeholder model (replace this!)
+    from sklearn.dummy import DummyClassifier
+    model = DummyClassifier(strategy='uniform', random_state={{random_seed}})
+    model.fit(X_train, y_train)
+    
+    return model
+
+def evaluate_model(model, X_val, y_val):
+    """Evaluate model performance"""
+    
+    # TODO: Add your evaluation logic
+    # - Get probability predictions
+    # - Calculate AUC score
+    # - Print other metrics if needed
+    
+    # Basic evaluation example
+    try:
+        y_pred_proba = model.predict_proba(X_val)[:, 1]
+        auc = roc_auc_score(y_val, y_pred_proba)
+        print(f"Validation AUC: {auc:.4f}")
+        return auc
+    except:
+        print("Could not evaluate model - implement predict_proba method")
+        return 0.0
+
+def create_submission(model, X_test, test_df):
+    """Create submission file"""
+    
+    # TODO: Generate predictions for test set
+    # Make sure to output probabilities in [0,1] range
+    
+    # Placeholder predictions (replace this!)
+    predictions = np.random.random(len(test_df))
+    
+    submission = pd.DataFrame({
+        'Id': test_df['Id'],
+        'Insult': predictions
+    })
+    
+    submission.to_csv('submission.csv', index=False)
+    print("Submission created: submission.csv")
+    
+    return submission
+
+def main():
+    """Main function - implement your solution here"""
+    
+    # Load data
+    train_df, test_df = load_data()
+    
+    # Explore data
+    explore_data(train_df)
+    
+    # TODO: Implement your complete solution here
+    print("\nTODO: Implement your insult detection solution")
+    print("1. Text preprocessing and cleaning")
+    print("2. Feature extraction")
+    print("3. Model training and validation")
+    print("4. Hyperparameter tuning")
+    print("5. Generate final predictions")
+    
+    # Basic workflow skeleton (expand this!)
+    train_features = extract_features(train_df)
+    test_features = extract_features(test_df)
+    
+    print(f"\nFeature shape: {train_features.shape}")
+    
+    # Train placeholder model
+    model = train_model(train_features, train_df['Insult'])
+    
+    # Create submission
+    submission = create_submission(model, test_features, test_df)
+    
+    print("\nReplace the placeholder implementations with your solution!")
+
+if __name__ == "__main__":
+    main()

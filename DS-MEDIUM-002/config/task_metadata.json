@@ -1,6 +1,6 @@
 {
-  "task_id": "MLE-MATERIALS-001",
-  "category": "machine_learning",
+  "task_id": "DS--MEDIUM--001",
+  "category": "Tabular",
   "title": "Material Property Prediction from Crystal Structure",
   "subcategory": "regression_materials_science",
   "difficulty": "advanced",

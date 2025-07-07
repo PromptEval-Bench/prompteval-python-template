@@ -1,0 +1,41 @@
+{
+  "task_id": "MLE-HARD-002",
+  "category": "image classification",
+  "title": "Text Image Denoising",
+  "subcategory": "image_restoration",
+  "difficulty": "hard",
+  "estimated_time_minutes": 90,
+  "points": 150,
+  "tags": [
+    "image-denoising",
+    "text-recognition",
+    "image-restoration",
+    "computer-vision",
+    "rmse-optimization",
+    "noise-removal"
+  ],
+  "skills_assessed": [
+    "image_processing",
+    "noise_reduction_techniques",
+    "pixel_level_prediction",
+    "feature_engineering",
+    "model_evaluation",
+    "computer_vision_preprocessing"
+  ],
+  "prerequisites": [
+    "basic_computer_vision",
+    "image_processing",
+    "numpy_arrays",
+    "pixel_manipulation"
+  ],
+  "learning_outcomes": [
+    "Apply image denoising techniques",
+    "Work with pixel-level predictions",
+    "Understand noise patterns in scanned text",
+    "Optimize for RMSE metric"
+  ],
+  "source": "MLE-Bench",
+  "original_url": "",
+  "version": "1.0.0",
+  "last_updated": "2025-07-07"
+}

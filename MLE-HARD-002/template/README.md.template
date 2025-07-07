@@ -1,0 +1,72 @@
+# {{application_name}} - Text Image Denoising Chall
+**Task:** Image Denoising for Scanned Text Documents
+
+## 🎯 Challenge Overview
+
+{{use_case_scenario}}
+
+## 📊 Task
+
+Remove noise from scanned text images to restore clean, readable documents.
+
+## 📈 Metric
+
+Root Mean Squared Error (RMSE) between cleaned and actual grayscale pixel intensities.
+
+## 📋 Submission Format
+
+Melt each image into pixels with ID format: `image_row_col`
+- Example: `1_2_1` = image 1, row 2, column 1
+- Intensity values: 0 (black) to 1 (white)
+
+```
+id,value
+1_1_1,1
+1_2_1,1
+1_3_1,1
+etc.
+```
+
+## 📊 Dataset
+
+- **train/**: Noisy training images
+- **train_cleaned/**: Clean versions of training images  
+- **test/**: Noisy test images (no clean versions provided)
+
+Images contain various text styles with synthetic noise simulating real-world scanning artifacts.
+
+## 📋 Files Provided
+
+- `train/` - Training images with noise
+- `train_cleaned/` - Clean versions of training images
+- `test/` - Test images with noise
+- `sample_submission.csv` - Submission format example
+
+## 🚀 Getting Started
+
+### 1. Explore the Data
+```bash
+python explore_data.py
+```
+
+### 2. Run Starter Code
+```bash
+python starter_code.py
+```
+
+### 3. Approach Suggestions
+**Preprocessing:**
+
+- {{preprocessing_step}}
+- Normalize pixel intensities
+- Handle different text styles
+**Denoising Methods:**
+
+- {{denoising_technique}}
+- Traditional filters
+- Machine learning approaches
+### Submission
+Create a CSV file with columns:
+
+- `id`: Pixel identifier (image_row_col format)
+- `value`: Cleaned pixel intensity (0.0 to 1.0)
