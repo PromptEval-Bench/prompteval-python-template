@@ -4,7 +4,7 @@
   "title": "Material Property Prediction from Crystal Structure",
   "subcategory": "regression_materials_science",
   "difficulty": "advanced",
-  "estimated_time_minutes": 120,
+  "estimated_time_minutes": 60,
   "points": 150,
   "tags": [
     "materials-science",
