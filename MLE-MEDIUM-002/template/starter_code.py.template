@@ -1,236 +1,72 @@
 #!/usr/bin/env python3
 """
-{{library_name}} - Material Property Prediction
-Basic Data Loading and Exploration Script
-
+{{library_name}} - Author Identification
 Author: [Your Name]
 Date: {{current_date}}
-
-This script provides basic functionality to load and explore the materials dataset.
-Build upon this foundation to create your prediction model.
 """
 
 import pandas as pd
 import numpy as np
-import os
-import json
-from pathlib import Path
-import matplotlib.pyplot as plt
-import warnings
-warnings.filterwarnings('ignore')
 
 # Set random seed for reproducibility
 np.random.seed({{random_seed}})
 
-class MaterialDataLoader:
-    """
-    Basic data loader for the materials property prediction challenge.
-    """
+def load_data():
+    """Load the training and test datasets"""
+    train_df = pd.read_csv('train.csv')
+    test_df = pd.read_csv('test.csv')
     
-    def __init__(self):
-        self.train_df = None
-        self.test_df = None
-        self.data_info = None
-        
-    def load_data(self):
-        """Load training and test datasets"""
-        print("📊 Loading materials dataset...")
-        
-        # Load CSV data
-        self.train_df = pd.read_csv('train.csv')
-        self.test_df = pd.read_csv('test.csv')
-        
-        # Load dataset info if available
-        if os.path.exists('data_info.json'):
-            with open('data_info.json', 'r') as f:
-                self.data_info = json.load(f)
-        
-        print(f"   Training samples: {len(self.train_df)}")
-        print(f"   Test samples: {len(self.test_df)}")
-        
-        return self
+    print(f"Training samples: {len(train_df)}")
+    print(f"Test samples: {len(test_df)}")
     
-    def explore_data(self):
-        """Basic data exploration"""
-        print("\n🔍 Data Exploration:")
-        print("=" * 50)
-        
-        print("\n📋 Training Data Info:")
-        print(f"   Shape: {self.train_df.shape}")
-        print(f"   Columns: {list(self.train_df.columns)}")
-        
-        print("\n📊 Target Variable Statistics:")
-        targets = ['formation_energy_ev_natom', 'bandgap_energy_ev']
-        for target in targets:
-            if target in self.train_df.columns:
-                values = self.train_df[target].dropna()
-                print(f"   {target}:")
-                print(f"      Count: {len(values)}")
-                print(f"      Mean: {values.mean():.4f}")
-                print(f"      Std: {values.std():.4f}")
-                print(f"      Min: {values.min():.4f}")
-                print(f"      Max: {values.max():.4f}")
-        
-        # Show sample data
-        print("\n📝 Sample Training Data:")
-        print(self.train_df.head())
-        
-        print("\n📝 Sample Test Data:")
-        print(self.test_df.head())
-        
-        # Check for missing values
-        print("\n❓ Missing Values:")
-        print("   Training data:")
-        missing_train = self.train_df.isnull().sum()
-        for col, count in missing_train.items():
-            if count > 0:
-                print(f"      {col}: {count}")
-        
-        print("   Test data:")
-        missing_test = self.test_df.isnull().sum()
-        for col, count in missing_test.items():
-            if count > 0:
-                print(f"      {col}: {count}")
-    
-    def load_geometry_file(self, material_id, dataset='train'):
-        """
-        Load a geometry file for a specific material
-        
-        Parameters
-        ----------
-        material_id : int
-            Material ID from the CSV
-        dataset : str
-            'train' or 'test'
-            
-        Returns
-        -------
-        dict
-            Dictionary with atoms and coordinates, or None if file not found
-        """
-        geometry_path = f'dataset/{dataset}_geometry/{material_id}/geometry.xyz'
-        
-        if not os.path.exists(geometry_path):
-            print(f"Warning: Geometry file not found at {geometry_path}")
-            return None
-        
-        try:
-            with open(geometry_path, 'r') as f:
-                lines = f.readlines()
-            
-            # Parse XYZ format
-            n_atoms = int(lines[0].strip())
-            comment = lines[1].strip() if len(lines) > 1 else ""
-            
-            atoms = []
-            coordinates = []
-            
-            for i in range(2, 2 + n_atoms):
-                if i < len(lines):
-                    parts = lines[i].strip().split()
-                    if len(parts) >= 4:
-                        element = parts[0]
-                        coords = [float(x) for x in parts[1:4]]
-                        atoms.append(element)
-                        coordinates.append(coords)
-            
-            return {
-                'n_atoms': n_atoms,
-                'comment': comment,
-                'atoms': atoms,
-                'coordinates': np.array(coordinates)
-            }
-            
-        except Exception as e:
-            print(f"Error parsing {geometry_path}: {e}")
-            return None
-    
-    def explore_geometry_data(self, n_samples=3):
-        """Explore geometry files for a few sample materials"""
-        print(f"\n🧪 Exploring Geometry Data (first {n_samples} samples):")
-        print("=" * 60)
-        
-        for i, row in self.train_df.head(n_samples).iterrows():
-            material_id = row['id']
-            print(f"\n📐 Material ID: {material_id}")
-            
-            geometry = self.load_geometry_file(material_id, 'train')
-            if geometry:
-                print(f"   Number of atoms: {geometry['n_atoms']}")
-                print(f"   Elements: {set(geometry['atoms'])}")
-                print(f"   Coordinate range:")
-                coords = geometry['coordinates']
-                if len(coords) > 0:
-                    print(f"      X: [{coords[:, 0].min():.3f}, {coords[:, 0].max():.3f}]")
-                    print(f"      Y: [{coords[:, 1].min():.3f}, {coords[:, 1].max():.3f}]")
-                    print(f"      Z: [{coords[:, 2].min():.3f}, {coords[:, 2].max():.3f}]")
-                
-                # Show first few atoms
-                print(f"   First 3 atoms:")
-                for j, (atom, coord) in enumerate(zip(geometry['atoms'][:3], geometry['coordinates'][:3])):
-                    print(f"      {atom}: ({coord[0]:.3f}, {coord[1]:.3f}, {coord[2]:.3f})")
-    
-    def create_basic_submission(self):
-        """Create a basic submission file with mean predictions"""
-        print("\n📝 Creating basic submission file...")
-        
-        # Calculate mean values from training data
-        mean_formation_energy = self.train_df['formation_energy_ev_natom'].mean()
-        mean_bandgap_energy = self.train_df['bandgap_energy_ev'].mean()
-        
-        # Create submission dataframe
-        submission = pd.DataFrame({
-            'id': self.test_df['id'],
-            'formation_energy_ev_natom': mean_formation_energy,
-            'bandgap_energy_ev': mean_bandgap_energy
-        })
-        
-        # Save submission
-        submission.to_csv('basic_submission.csv', index=False)
-        
-        print(f"   ✅ Basic submission created: basic_submission.csv")
-        print(f"   Predictions:")
-        print(f"      formation_energy_ev_natom: {mean_formation_energy:.4f} (constant)")
-        print(f"      bandgap_energy_ev: {mean_bandgap_energy:.4f} (constant)")
-        print(f"   Submission shape: {submission.shape}")
-        
-        return submission
+    return train_df, test_df
 
+def explore_data(train_df):
+    """Basic data exploration"""
+    print("\nAuthor distribution:")
+    print(train_df['author'].value_counts())
+    
+    print("\nSample texts:")
+    for author in ['EAP', 'HPL', 'MWS']:
+        sample = train_df[train_df['author'] == author]['text'].iloc[0]
+        print(f"{author}: {sample[:100]}...")
+
+def create_submission(test_df):
+    """Create a basic submission with equal probabilities"""
+    submission = pd.DataFrame({
+        'id': test_df['id'],
+        'EAP': 0.33,  # Equal probabilities as baseline
+        'HPL': 0.33,
+        'MWS': 0.34
+    })
+    
+    submission.to_csv('submission.csv', index=False)
+    print("Basic submission created: submission.csv")
+    
+    return submission
 
 def main():
-    """Main data exploration pipeline"""
-    print("🧪 {{library_name}} - Material Property Prediction")
-    print("=" * 60)
-    
-    # Initialize data loader
-    loader = MaterialDataLoader()
-    
+    """Main function - implement your solution here"""
     # Load data
-    loader.load_data()
+    train_df, test_df = load_data()
     
-    # Explore basic statistics
-    loader.explore_data()
+    # Explore data
+    explore_data(train_df)
     
-    # Explore geometry data
-    loader.explore_geometry_data()
+    # TODO: Implement your text classification solution here
+    # 1. Text preprocessing
+    # 2. Feature extraction
+    # 3. Model training
+    # 4. Prediction
     
-    # Create basic submission
-    loader.create_basic_submission()
+    # Create basic submission (replace this with your predictions)
+    create_submission(test_df)
     
-    print("\n" + "=" * 60)
-    print("🎯 Next Steps:")
-    print("   1. Analyze the relationship between features and targets")
-    print("   2. Extract meaningful features from geometry data")
-    print("   3. Build and train prediction models")
-    print("   4. Create your final submission file")
-    print("   5. Submit with: ./scripts/submit.sh")
-    
-    print("\n💡 Tips:")
-    print("   - Use the geometry.xyz files for additional features")
-    print("   - Consider crystal structure and composition relationships")
-    print("   - The metric is column-wise RMSLE")
-    print("   - Both formation energy and bandgap need to be predicted")
-
+    print("\nNext steps:")
+    print("- Implement text preprocessing")
+    print("- Extract meaningful features")
+    print("- Train a classification model")
+    print("- Generate probability predictions")
 
 if __name__ == "__main__":
     main()

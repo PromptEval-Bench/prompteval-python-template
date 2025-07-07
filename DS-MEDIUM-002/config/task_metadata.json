@@ -1,0 +1,42 @@
+{
+  "task_id": "MLE-MATERIALS-001",
+  "category": "machine_learning",
+  "title": "Material Property Prediction from Crystal Structure",
+  "subcategory": "regression_materials_science",
+  "difficulty": "advanced",
+  "estimated_time_minutes": 120,
+  "points": 150,
+  "tags": [
+    "materials-science",
+    "multi-target-regression", 
+    "crystal-structure",
+    "feature-engineering",
+    "geometric-data",
+    "rmsle-optimization"
+  ],
+  "skills_assessed": [
+    "materials_informatics",
+    "multi_target_regression",
+    "geometric_feature_extraction",
+    "crystal_structure_analysis",
+    "scientific_data_processing",
+    "feature_engineering"
+  ],
+  "prerequisites": [
+    "machine_learning_fundamentals",
+    "regression_techniques",
+    "feature_engineering",
+    "scientific_computing",
+    "pandas_numpy_proficiency"
+  ],
+  "learning_outcomes": [
+    "Apply ML to materials science problems",
+    "Extract features from 3D atomic structures",
+    "Handle heterogeneous scientific datasets",
+    "Optimize multi-target regression models"
+  ],
+  "source": "MLE-Bench NOMAD 2018",
+  "dataset": "nomad2018-predict-transparent-conductors",
+  "version": "1.0.0",
+  "last_updated": "2025-07-05"
+}

@@ -1,123 +1,56 @@
-# Employee ID Validation System Challenge
+# Author Identification Challenge
 
-## Background
-{{company_scenario}}
+## Project Background
 
-## Company Profile
-- **Company Name**: {{company_name}}
-- **Total Employees**: {{array_length}}
-- **Validation System**: Digital ID verification
-- **Security Level**: {{security_level}}
+**{{library_name}}** is a literary analysis platform that helps researchers identify authors through computational text analysis.
 
-## Problem Statement
+## Problem Description
 
-Your company has implemented a new employee ID validation system where each employee is assigned a unique numeric ID. The security protocol requires that an employee's position in the system (their index) matches a specific digit-based validation rule.
+{{use_case_scenario}}
 
-### Security Rule
-An employee ID is considered "**self-validating**" if the sum of its digits equals the employee's position (index) in the company database.
+## Task
 
-### Your Task
-You need to implement a function that finds the **smallest index** where an employee ID satisfies the self-validation rule. If no such employee exists, the system should return -1 to indicate a security configuration issue.
+Given some text, predict the author.
 
-## Technical Specifications
+## Metric
 
-### Input Format
-The employee data is provided in `employee_data.json`:
-```json
-{
-  "employee_ids": [{{sample_array}}],
-  "company_name": "{{company_name}}",
-  "validation_threshold": {{validation_threshold}}
-}
+Multi-class logarithmic loss.
 
-### Expected Output
-Your function should return an integer:
+The submitted probabilities for a given sentences are not required to sum to one because they are rescaled prior to being scored (each row is divided by the row sum).
 
-- The smallest index where `sum_of_digits(employee_ids[i]) == i`
-- `-1` if no such index exists
+In order to avoid the extremes of the log function, predicted probabilities are replaced with max(min(p,1-10^{-15}),10^{-15}).
 
-### Core Function
-Implement the `{{function_name}}()` function in `solution.py`:
-```python
-def {{function_name}}(employee_ids):
-    """
-    Find the smallest index where digit sum equals index.
-    
-    Args:
-        employee_ids: List of integers representing employee IDs
-        
-    Returns:
-        Integer: smallest valid index, or -1 if none exists
-    """
-    # Your implementation here
-    pass
+## Submission Format
+
+You must submit a csv file with the id, and a probability for each of the three classes. The order of the rows does not matter. The file must have a header and should look like the following:
+
+```
+id,EAP,HPL,MWS
+id07943,0.33,0.33,0.33
 ```
 
-### Examples
-Example 1: Standard Case
-```python
-employee_ids = [1, 3, 2]
-# Index 0: sum_of_digits(1) = 1 ≠ 0
-# Index 1: sum_of_digits(3) = 3 ≠ 1  
-# Index 2: sum_of_digits(2) = 2 = 2 ✓
-# Result: 2
-```
+## Dataset
 
-Example 2: Multiple Valid Indices
-```python
-employee_ids = [1, 10, 11]
-# Index 0: sum_of_digits(1) = 1 ≠ 0
-# Index 1: sum_of_digits(10) = 1+0 = 1 = 1 ✓
-# Index 2: sum_of_digits(11) = 1+1 = 2 = 2 ✓
-# Result: 1 (smallest valid index)
-```
+### File descriptions
 
-Example 3: No Valid Index
-```python
-employee_ids = [1, 2, 3]
-# Index 0: sum_of_digits(1) = 1 ≠ 0
-# Index 1: sum_of_digits(2) = 2 ≠ 1
-# Index 2: sum_of_digits(3) = 3 ≠ 2
-# Result: -1
-```
+- **train.csv** - the training set
+- **test.csv** - the test set
+- **sample_submission.csv** - a sample submission file in the correct format
 
-### Implementation Requirements
-## Digit Sum Calculation
-You'll need a helper function to calculate digit sum:
-```python
-def calculate_digit_sum(number):
-    """Calculate sum of digits in a number."""
-    # Convert to string and sum individual digits
-    # OR use mathematical approach with modulo operations
-    pass
-```
+### Data fields
 
-### Constraints
-- Employee database size: 1 ≤ len(employee_ids) ≤ {{max_array_length}}
-- Employee ID range: 0 ≤ employee_ids[i] ≤ {{max_employee_id}}
-- Time complexity should be O(n × log(max_id))
-- Space complexity should be O(1)
+- **id** - a unique identifier for each sentence
+- **text** - some text written by one of the authors
+- **author** - the author of the sentence (EAP: Edgar Allan Poe, HPL: HP Lovecraft; MWS: Mary Wollstonecraft Shelley)
 
-### Evaluation Criteria
-1. Correctness: Function returns correct index for all test cases
-2. Edge Cases: Handles empty arrays, single elements, large numbers
-3. Efficiency: Optimal time and space complexity
-4. Code Quality: Clean, readable, well-documented code
+## Implementation Approach
 
-### Getting Started
-1. Review the employee data in employee_data.json
-2. Understand the digit sum calculation requirement
-3. Implement your solution in solution.py
-4. Test locally with: python test_solution.py
-5. Submit your solution with: ./scripts/submit.sh
+Consider using {{model_approach}} for text classification with {{feature_engineering}} feature engineering.
 
-### Testing Tips
-- Test with single-digit and multi-digit numbers
-- Consider edge cases like 0, 10, 100, etc.
-- Verify the digit sum calculation is correct
-- Test arrays where no valid index exists
+## Authors
 
-### Security Note
-This validation system is part of {{company_name}}'s enhanced security protocol. Accurate implementation is crucial for maintaining system integrity.
+- **EAP**: Edgar Allan Poe - Master of Gothic horror and mystery
+- **HPL**: H.P. Lovecraft - Pioneer of cosmic horror fiction  
+- **MWS**: Mary Wollstonecraft Shelley - Author of Frankenstein and Gothic novels
 
-Good luck with the implementation!
+Each author has distinct writing styles, vocabulary, and thematic elements that can be captured through text analysis.

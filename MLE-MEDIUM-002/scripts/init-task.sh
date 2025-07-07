@@ -1,13 +1,13 @@
 #!/bin/bash
-# Material Property Prediction Task Initialization Script
+# Author Identification Task Initialization Script with Kaggle Data Download
 
 set -e  # Exit on error
 
-echo "🚀 Initializing Material Property Prediction Challenge..."
+echo "🚀 Initializing Author Identification Challenge..."
 
 # Basic setup
 sudo apt-get update > /dev/null 2>&1
-sudo apt-get install -y bc jq curl > /dev/null 2>&1
+sudo apt-get install -y bc jq curl unzip python3-pip > /dev/null 2>&1
 
 # Load configuration
 CONFIG_DIR="config"
@@ -32,13 +32,13 @@ if [ ! -z "$LLM_API_URL" ] && [ ! -z "$LLM_API_KEY" ]; then
         -H "Content-Type: application/json" \
         -d '{
             "model": "gpt-3.5-turbo",
-            "prompt": "Generate a realistic name for a computational materials science platform. Examples: MatMLab, CrystalPredict, MaterialsAI. Return only the name.",
+            "prompt": "Generate a name for a literary text analysis platform. Examples: LitAnalyzer, TextScribe, AuthorIQ. Return only the name.",
             "max_tokens": 15,
             "temperature": 0.7
-        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs || echo "MaterialsAI")
+        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs 2>/dev/null || echo "LitAnalyzer")
     
     # Generate scenario
-    SCENARIO_PROMPT="Write a 2-3 sentence scenario about a materials scientist using $LIBRARY_NAME to predict material properties from crystal structure data."
+    SCENARIO_PROMPT="Write a 2-3 sentence scenario about how $LIBRARY_NAME is used by literary scholars to identify authors using machine learning."
     USE_CASE_SCENARIO=$(curl -s -X POST "$LLM_API_URL/v1/completions" \
         -H "Authorization: Bearer $LLM_API_KEY" \
         -H "Content-Type: application/json" \
@@ -47,7 +47,7 @@ if [ ! -z "$LLM_API_URL" ] && [ ! -z "$LLM_API_KEY" ]; then
             \"prompt\": \"$SCENARIO_PROMPT\",
             \"max_tokens\": 120,
             \"temperature\": 0.6
-        }" | jq -r '.choices[0].text' | tr '\n' ' ' | xargs || echo "Default scenario")
+        }" | jq -r '.choices[0].text' | tr '\n' ' ' | xargs 2>/dev/null || echo "Default scenario")
     
     # Generate approach
     MODEL_APPROACH=$(curl -s -X POST "$LLM_API_URL/v1/completions" \
@@ -55,10 +55,10 @@ if [ ! -z "$LLM_API_URL" ] && [ ! -z "$LLM_API_KEY" ]; then
         -H "Content-Type: application/json" \
         -d '{
             "model": "gpt-3.5-turbo",
-            "prompt": "Suggest one ML approach for materials property prediction. Examples: ensemble methods, neural networks. One term only.",
-            "max_tokens": 10,
+            "prompt": "Suggest a machine learning approach for text classification. Examples: TF-IDF with SVM, neural networks. Return approach name only.",
+            "max_tokens": 15,
             "temperature": 0.5
-        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs || echo "ensemble methods")
+        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs 2>/dev/null || echo "TF-IDF with SVM")
     
     # Generate feature engineering
     FEATURE_ENGINEERING=$(curl -s -X POST "$LLM_API_URL/v1/completions" \
@@ -66,16 +66,16 @@ if [ ! -z "$LLM_API_URL" ] && [ ! -z "$LLM_API_KEY" ]; then
         -H "Content-Type: application/json" \
         -d '{
             "model": "gpt-3.5-turbo",
-            "prompt": "Suggest one feature engineering approach for crystalline materials. Examples: compositional, geometric. One word only.",
-            "max_tokens": 8,
+            "prompt": "Suggest one text feature engineering technique. Examples: n-gram analysis, stylometric. One term only.",
+            "max_tokens": 10,
             "temperature": 0.4
-        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs || echo "structural")
+        }' | jq -r '.choices[0].text' | tr -d '\n' | xargs 2>/dev/null || echo "stylometric")
 else
     echo "⚠️  LLM not available, using fallback content..."
-    LIBRARY_NAME="MaterialsAI"
-    USE_CASE_SCENARIO="A materials scientist is using $LIBRARY_NAME to predict formation energy and bandgap properties from crystal structure data. The platform combines atomic composition and spatial coordinates to accelerate materials discovery for electronic applications."
-    MODEL_APPROACH="ensemble methods"
-    FEATURE_ENGINEERING="structural"
+    LIBRARY_NAME="LitAnalyzer"
+    USE_CASE_SCENARIO="Literary scholars use $LIBRARY_NAME to analyze writing styles and identify authors of disputed or anonymous texts. The platform employs machine learning to detect subtle patterns in vocabulary, syntax, and stylistic choices that are unique to each writer."
+    MODEL_APPROACH="TF-IDF with SVM"
+    FEATURE_ENGINEERING="stylometric"
 fi
 
 # Escape for sed
@@ -84,179 +84,173 @@ USE_CASE_SCENARIO_ESCAPED=$(echo "$USE_CASE_SCENARIO" | sed 's/[[\.*^$()+?{|]/\\
 MODEL_APPROACH_ESCAPED=$(echo "$MODEL_APPROACH" | sed 's/[[\.*^$()+?{|]/\\&/g')
 FEATURE_ENGINEERING_ESCAPED=$(echo "$FEATURE_ENGINEERING" | sed 's/[[\.*^$()+?{|]/\\&/g')
 
-echo "🏢 Library: $LIBRARY_NAME"
+echo "📚 Library: $LIBRARY_NAME"
 
-# Setup environment
-echo "📦 Setting up environment..."
-cp "$TEMPLATE_DIR/requirements.txt" requirements.txt
-pip install -r requirements.txt > /dev/null 2>&1
+# Setup Python environment
+echo "📦 Setting up Python environment..."
+pip install pandas numpy scikit-learn kaggle > /dev/null 2>&1
 
-# Data setup
-echo "📊 Setting up dataset..."
-
-# Check if data directory exists
-DATA_SOURCE_DIR="data/nomad2018-predict-transparent-conductors"
-if [ -d "$DATA_SOURCE_DIR" ]; then
-    echo "   ✅ Data source found: $DATA_SOURCE_DIR"
-    
-    # Create dataset directory
-    mkdir -p dataset
-    
-    # Copy key files to working directory
-    if [ -f "$DATA_SOURCE_DIR/public/train.csv" ]; then
-        cp "$DATA_SOURCE_DIR/public/train.csv" ./
-        echo "   ✅ Copied train.csv"
-    fi
-    
-    if [ -f "$DATA_SOURCE_DIR/public/test.csv" ]; then
-        cp "$DATA_SOURCE_DIR/public/test.csv" ./
-        echo "   ✅ Copied test.csv"
-    fi
-    
-    if [ -f "$DATA_SOURCE_DIR/public/sample_submission.csv" ]; then
-        cp "$DATA_SOURCE_DIR/public/sample_submission.csv" ./
-        echo "   ✅ Copied sample_submission.csv"
-    fi
-    
-    # Create symlinks for geometry directories if they exist
-    if [ -d "$DATA_SOURCE_DIR/public/train" ]; then
-        ln -sf "$(realpath $DATA_SOURCE_DIR/public/train)" ./dataset/train_geometry
-        echo "   ✅ Linked train geometry directory"
-    fi
-    
-    if [ -d "$DATA_SOURCE_DIR/public/test" ]; then
-        ln -sf "$(realpath $DATA_SOURCE_DIR/public/test)" ./dataset/test_geometry
-        echo "   ✅ Linked test geometry directory"
-    fi
-    
-    # Create data info file
-    TRAIN_COUNT=0
-    TEST_COUNT=0
-    if [ -f "train.csv" ]; then
-        TRAIN_COUNT=$(tail -n +2 train.csv | wc -l 2>/dev/null || echo "0")
-    fi
-    if [ -f "test.csv" ]; then
-        TEST_COUNT=$(tail -n +2 test.csv | wc -l 2>/dev/null || echo "0")
-    fi
-    
-    cat > data_info.json << EOF
-{
-    "dataset_name": "NOMAD 2018 Transparent Conductors",
-    "task_type": "regression",
-    "targets": ["formation_energy_ev_natom", "bandgap_energy_ev"],
-    "train_samples": $TRAIN_COUNT,
-    "test_samples": $TEST_COUNT,
-    "geometry_files": "Available in dataset/train_geometry/ and dataset/test_geometry/"
-}
-EOF
-
-    echo "   📁 Dataset structure:"
-    echo "      - train.csv: Training data with targets"
-    echo "      - test.csv: Test data for predictions"
-    echo "      - sample_submission.csv: Submission format example"
-    echo "      - dataset/train_geometry/: XYZ geometry files for training"
-    echo "      - dataset/test_geometry/: XYZ geometry files for testing"
-    
-    echo "   📊 Data summary:"
-    echo "      - Training samples: $TRAIN_COUNT"
-    echo "      - Test samples: $TEST_COUNT"
-    
-    # Check for geometry files (sample check)
-    if [ -f "train.csv" ] && [ "$TRAIN_COUNT" -gt 0 ]; then
-        FIRST_TRAIN_ID=$(tail -n +2 train.csv | head -n 1 | cut -d',' -f1)
-        if [ -f "dataset/train_geometry/$FIRST_TRAIN_ID/geometry.xyz" ]; then
-            echo "   ✅ Geometry files verified"
-        else
-            echo "   ⚠️  Warning: Geometry files may not be properly linked"
-        fi
-    fi
-    
-else
-    echo "❌ Error: Data directory not found at $DATA_SOURCE_DIR"
-    echo "Please ensure the data folder is placed in the correct location."
+# Check for Kaggle credentials from environment variables/secrets
+echo "🔑 Checking Kaggle credentials..."
+if [ -z "$KAGGLE_USERNAME" ] || [ -z "$KAGGLE_KEY" ]; then
+    echo "❌ FAILED: Kaggle credentials not found!"
+    echo ""
+    echo "Required environment variables:"
+    echo "   - KAGGLE_USERNAME: Your Kaggle username"
+    echo "   - KAGGLE_KEY: Your Kaggle API key"
+    echo ""
+    echo "To set up Kaggle credentials:"
+    echo "   1. Create account at kaggle.com"
+    echo "   2. Go to Account > API > Create New API Token"
+    echo "   3. Set the environment variables in your secrets/config"
+    echo ""
     exit 1
 fi
 
-# Create data exploration helper
-cat > explore_data.py << 'EOF'
-#!/usr/bin/env python3
-"""
-Quick data exploration script for the materials dataset
-"""
+echo "   ✅ Found Kaggle credentials in environment variables"
 
+# Setup Kaggle credentials temporarily
+mkdir -p ~/.kaggle
+echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
+chmod 600 ~/.kaggle/kaggle.json
+
+# Download and prepare dataset
+echo "📊 Downloading dataset from Kaggle..."
+
+# Create data directories
+mkdir -p data/raw data/public data/private
+
+# Download competition data
+if kaggle competitions download -c spooky-author-identification -p data/raw/ 2>/dev/null; then
+    echo "   ✅ Successfully downloaded from Kaggle"
+    
+    # Extract downloaded files
+    cd data/raw
+    if [ -f "spooky-author-identification.zip" ]; then
+        unzip -q spooky-author-identification.zip
+        rm spooky-author-identification.zip
+    fi
+    
+    # Also extract train.zip if it exists
+    if [ -f "train.zip" ]; then
+        unzip -q train.zip
+    fi
+    cd ../..
+    
+else
+    # Clean up credentials and exit
+    rm -f ~/.kaggle/kaggle.json
+    rmdir ~/.kaggle 2>/dev/null || true
+    
+    echo "❌ FAILED: Could not download data from Kaggle!"
+    echo ""
+    echo "Possible causes:"
+    echo "   - Invalid Kaggle credentials"
+    echo "   - Network connectivity issues"
+    echo "   - Competition may not be accessible"
+    echo "   - Rate limiting from Kaggle API"
+    echo ""
+    echo "Please verify:"
+    echo "   1. Your Kaggle credentials are correct"
+    echo "   2. You have internet access"
+    echo "   3. The competition 'spooky-author-identification' is available"
+    echo ""
+    exit 1
+fi
+
+# Clean up Kaggle credentials immediately after successful use
+echo "   🧹 Cleaning up temporary credentials..."
+rm -f ~/.kaggle/kaggle.json
+rmdir ~/.kaggle 2>/dev/null || true
+
+# Run data preparation
+echo "   🔄 Preparing train/test split..."
+
+# Create a standalone prepare script
+cat > prepare_data.py << 'EOF'
+#!/usr/bin/env python3
 import pandas as pd
 import numpy as np
-import os
-import json
+from pathlib import Path
+from sklearn.model_selection import train_test_split
 
-def explore_dataset():
-    print("🔍 Material Property Prediction Dataset Explorer")
-    print("=" * 60)
+def prepare_data():
+    """Prepare the dataset for the competition"""
     
-    # Load data info
-    if os.path.exists('data_info.json'):
-        with open('data_info.json', 'r') as f:
-            data_info = json.load(f)
-        
-        print(f"📊 Dataset: {data_info['dataset_name']}")
-        print(f"📈 Task: {data_info['task_type']} - {data_info['targets']}")
+    # Paths
+    raw_path = Path("data/raw")
+    public_path = Path("data/public")
+    private_path = Path("data/private")
     
-    # Load CSV files
-    if os.path.exists('train.csv') and os.path.exists('test.csv'):
-        train_df = pd.read_csv('train.csv')
-        test_df = pd.read_csv('test.csv')
-        
-        print(f"\n📁 Data Shape:")
-        print(f"   Training: {train_df.shape}")
-        print(f"   Test: {test_df.shape}")
-        
-        # Basic statistics
-        print(f"\n📊 Target Statistics:")
-        for target in ['formation_energy_ev_natom', 'bandgap_energy_ev']:
-            if target in train_df.columns:
-                values = train_df[target].dropna()
-                print(f"   {target}:")
-                print(f"      Mean: {values.mean():.4f}")
-                print(f"      Std: {values.std():.4f}")
-                print(f"      Range: [{values.min():.4f}, {values.max():.4f}]")
-        
-        # Feature overview
-        print(f"\n🔧 Features Overview:")
-        feature_cols = [col for col in train_df.columns if col not in ['id', 'formation_energy_ev_natom', 'bandgap_energy_ev']]
-        for col in feature_cols:
-            print(f"   {col}: {train_df[col].dtype}")
-        
-        # Check for missing values
-        missing_train = train_df.isnull().sum().sum()
-        missing_test = test_df.isnull().sum().sum()
-        print(f"\n❓ Missing Values:")
-        print(f"   Training: {missing_train}")
-        print(f"   Test: {missing_test}")
-        
-        # Geometry files check
-        sample_id = train_df.iloc[0]['id']
-        geometry_path = f"dataset/train_geometry/{sample_id}/geometry.xyz"
-        if os.path.exists(geometry_path):
-            print(f"\n🧪 Geometry Data Sample (ID: {sample_id}):")
-            with open(geometry_path, 'r') as f:
-                lines = f.readlines()
-                print(f"   Atoms: {lines[0].strip()}")
-                print(f"   Format: XYZ coordinates")
-                if len(lines) > 2:
-                    print(f"   First atom: {lines[2].strip()}")
-    else:
-        print("❌ CSV files not found")
+    # Create directories
+    public_path.mkdir(exist_ok=True)
+    private_path.mkdir(exist_ok=True)
     
-    print(f"\n🎯 Your Task:")
-    print(f"   Predict formation_energy_ev_natom and bandgap_energy_ev")
-    print(f"   Use material properties + 3D geometry information")
-    print(f"   Submit in the required CSV format")
+    # Read the original training data
+    train_file = raw_path / "train.csv"
+    if not train_file.exists():
+        print(f"Error: {train_file} not found!")
+        return False
+    
+    df = pd.read_csv(train_file)
+    print(f"Loaded {len(df)} samples")
+    
+    # Create train/test split
+    train_df, test_df = train_test_split(df, test_size=0.1, random_state=42, stratify=df['author'])
+    
+    # Remove labels from test set
+    test_without_labels = test_df[['id', 'text']].copy()
+    
+    # Create sample submission
+    sample_submission = pd.DataFrame({
+        'id': test_df['id'],
+        'EAP': 0.403493538995863,
+        'HPL': 0.287808366106543,
+        'MWS': 0.308698094897594
+    })
+    
+    # Create ground truth for private evaluation
+    test_labels = test_df[['id', 'author']].copy()
+    # Convert to one-hot format
+    test_labels_onehot = pd.get_dummies(test_labels.set_index('id')['author']).reset_index()
+    # Reorder columns to match submission format
+    test_labels_onehot = test_labels_onehot[['id', 'EAP', 'HPL', 'MWS']].fillna(0).astype(int)
+    
+    # Save files
+    train_df.to_csv(public_path / "train.csv", index=False)
+    test_without_labels.to_csv(public_path / "test.csv", index=False)
+    sample_submission.to_csv(public_path / "sample_submission.csv", index=False)
+    test_labels_onehot.to_csv(private_path / "test.csv", index=False)
+    
+    print(f"✅ Data prepared:")
+    print(f"   Training samples: {len(train_df)}")
+    print(f"   Test samples: {len(test_df)}")
+    print(f"   Files created in data/public/ and data/private/")
+    
+    return True
 
 if __name__ == "__main__":
-    explore_dataset()
+    prepare_data()
 EOF
 
-chmod +x explore_data.py
+if ! python3 prepare_data.py; then
+    echo "❌ FAILED: Could not prepare dataset!"
+    exit 1
+fi
+
+# Copy prepared data to working directory
+if [ -f "data/public/train.csv" ]; then
+    cp data/public/train.csv ./
+    cp data/public/test.csv ./
+    cp data/public/sample_submission.csv ./
+    echo "   ✅ Dataset files copied to working directory"
+else
+    echo "❌ FAILED: Dataset preparation incomplete!"
+    exit 1
+fi
+
+# Clean up temporary files
+rm -f prepare_data.py
 
 # Process templates
 echo "📝 Processing templates..."
@@ -275,35 +269,111 @@ sed -e "s/{{library_name}}/$LIBRARY_NAME_ESCAPED/g" \
     -e "s/{{random_seed}}/$RANDOM_SEED/g" \
     "$TEMPLATE_DIR/starter_code.py.template" > starter_code.py
 
+# Create data exploration helper
+cat > explore_data.py << 'EOF'
+#!/usr/bin/env python3
+"""
+Quick data exploration script for the author identification dataset
+"""
+
+import pandas as pd
+import numpy as np
+
+def explore_dataset():
+    print("🔍 Author Identification Dataset Explorer")
+    print("=" * 60)
+    
+    # Load data
+    try:
+        train_df = pd.read_csv('train.csv')
+        test_df = pd.read_csv('test.csv')
+        
+        print(f"📁 Data Shape:")
+        print(f"   Training: {train_df.shape}")
+        print(f"   Test: {test_df.shape}")
+        
+        # Author distribution
+        if 'author' in train_df.columns:
+            print(f"\n👥 Author Distribution:")
+            author_counts = train_df['author'].value_counts()
+            for author, count in author_counts.items():
+                percentage = count / len(train_df) * 100
+                print(f"   {author}: {count} ({percentage:.1f}%)")
+        
+        # Text statistics
+        if 'text' in train_df.columns:
+            train_df['text_length'] = train_df['text'].str.len()
+            train_df['word_count'] = train_df['text'].str.split().str.len()
+            
+            print(f"\n📊 Text Statistics:")
+            print(f"   Average text length: {train_df['text_length'].mean():.1f} characters")
+            print(f"   Average word count: {train_df['word_count'].mean():.1f} words")
+            
+            # By author
+            if 'author' in train_df.columns:
+                print(f"\n📝 Text Stats by Author:")
+                for author in train_df['author'].unique():
+                    author_data = train_df[train_df['author'] == author]
+                    avg_len = author_data['text_length'].mean()
+                    avg_words = author_data['word_count'].mean()
+                    print(f"   {author}: {avg_len:.1f} chars, {avg_words:.1f} words")
+        
+        # Sample texts
+        print(f"\n📖 Sample Texts:")
+        if len(train_df) > 0:
+            for i, (_, row) in enumerate(train_df.head(3).iterrows()):
+                text_preview = row['text'][:100] + "..." if len(row['text']) > 100 else row['text']
+                author = row.get('author', 'Unknown')
+                print(f"   {author}: {text_preview}")
+        
+    except FileNotFoundError as e:
+        print(f"❌ Data file not found: {e}")
+    except Exception as e:
+        print(f"❌ Error loading data: {e}")
+    
+    print(f"\n🎯 Your Task:")
+    print(f"   Predict probabilities for three authors: EAP, HPL, MWS")
+    print(f"   Use text features and NLP techniques")
+    print(f"   Optimize for logarithmic loss")
+
+if __name__ == "__main__":
+    explore_dataset()
+EOF
+
+chmod +x explore_data.py
+
 # Create submission metadata
 cat > .submission_metadata.json << EOF
 {
-    "task_id": "MATERIALS-$(date +%s)",
+    "task_id": "NLP-AUTHOR-$(date +%s)",
     "generation_time": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
     "parameters": {
         "random_seed": $RANDOM_SEED,
         "library_name": "$LIBRARY_NAME"
     },
     "dataset_info": {
-        "source": "MLE-Bench NOMAD 2018",
-        "task_type": "multi_target_regression",
-        "targets": ["formation_energy_ev_natom", "bandgap_energy_ev"]
+        "task_type": "text_classification",
+        "classes": ["EAP", "HPL", "MWS"],
+        "metric": "multi_class_log_loss",
+        "source": "kaggle_spooky_author_identification"
     }
 }
 EOF
 
-# Clean up templates
-rm -rf "$TEMPLATE_DIR"
+# Clean up configuration files
+echo "🧹 Cleaning up configuration files..."
 rm -rf "$CONFIG_DIR"
+rm -rf "$TEMPLATE_DIR"
 
 echo ""
-echo "✅ Material Property Prediction environment initialized!"
+echo "✅ Author Identification challenge initialized successfully!"
 echo ""
+echo "📊 Using real Kaggle competition data"
 echo "📋 Next steps:"
 echo "   1. Explore the dataset: python explore_data.py"
 echo "   2. Read the problem description in README.md"  
-echo "   3. Examine training data: python starter_code.py"
-echo "   4. Build your prediction model"
+echo "   3. Run the starter code: python starter_code.py"
+echo "   4. Build your NLP model"
 echo "   5. Submit with: ./scripts/submit.sh"
 echo ""
-echo "🧪 Materials science modeling starts now! Good luck! ⚗️"
+echo "📚 Literary analysis meets machine learning! Good luck! ✍️"

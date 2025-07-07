@@ -1,5 +1,5 @@
 {
-  "name": "Python Development - NLP Text Classification",
+  "name": "Python Development - Materials Science",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
   
   "features": {
@@ -23,7 +23,10 @@
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.pylintEnabled": true,
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.xyz": "plaintext"
+        }
       }
     }
   },

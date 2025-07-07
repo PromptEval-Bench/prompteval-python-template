@@ -1,9 +1,9 @@
 #!/bin/bash
-# Author Identification Submission Script
+# Material Property Prediction Submission Script
 
 set -e  # Exit on error
 
-echo "📤 Preparing to submit your author identification solution..."
+echo "📤 Preparing to submit your material property prediction..."
 
 # Check if required files exist
 required_files=("submission.csv")
@@ -38,7 +38,7 @@ try:
     submission = pd.read_csv('submission.csv')
     
     # Check required columns
-    required_cols = ['id', 'EAP', 'HPL', 'MWS']
+    required_cols = ['id', 'formation_energy_ev_natom', 'bandgap_energy_ev']
     missing_cols = [col for col in required_cols if col not in submission.columns]
     
     if missing_cols:
@@ -50,20 +50,16 @@ try:
         print("❌ Submission contains missing values")
         sys.exit(1)
     
-    # Check probability columns are numeric
-    for col in ['EAP', 'HPL', 'MWS']:
-        if not pd.api.types.is_numeric_dtype(submission[col]):
-            print(f"❌ {col} column must be numeric")
-            sys.exit(1)
+    # Check data types
+    if not pd.api.types.is_numeric_dtype(submission['formation_energy_ev_natom']):
+        print("❌ formation_energy_ev_natom must be numeric")
+        sys.exit(1)
     
-    # Check probability values are reasonable
-    prob_cols = ['EAP', 'HPL', 'MWS']
-    for col in prob_cols:
-        if (submission[col] < 0).any() or (submission[col] > 1).any():
-            print(f"⚠️  Warning: {col} contains values outside [0,1] range")
+    if not pd.api.types.is_numeric_dtype(submission['bandgap_energy_ev']):
+        print("❌ bandgap_energy_ev must be numeric")
+        sys.exit(1)
     
     print(f"✅ Submission format valid: {submission.shape}")
-    print(f"   Sample probabilities sum: {submission[prob_cols].iloc[0].sum():.3f}")
     
 except Exception as e:
     print(f"❌ Error validating submission: {e}")
@@ -115,7 +111,7 @@ cat > "$SUBMISSION_DIR/submission_info.json" << EOF
         "python_version": "$(python3 --version 2>&1)",
         "platform": "$(uname -s)"
     },
-    "task_type": "author_identification",
+    "task_type": "materials_property_prediction",
     "files_included": ["submission.csv"]
 }
 EOF
@@ -148,8 +144,8 @@ if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
     echo "📋 Submission Details:"
     echo "$RESPONSE_BODY" | jq . 2>/dev/null || echo "$RESPONSE_BODY"
     echo ""
-    echo "Your literary analysis solution has been submitted for evaluation."
-    echo "The NLP community thanks you for your contribution! 📚"
+    echo "Your material property predictions have been submitted for evaluation."
+    echo "The materials science community thanks you for your contribution! 🧪"
 else
     echo "❌ Submission failed!"
     echo "HTTP Status: $HTTP_CODE"

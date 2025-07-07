@@ -1,42 +1,40 @@
 {
-  "task_id": "MLE-MATERIALS-001",
+  "task_id": "NLP-AUTHOR-001",
   "category": "machine_learning",
-  "title": "Material Property Prediction from Crystal Structure",
-  "subcategory": "regression_materials_science",
-  "difficulty": "advanced",
-  "estimated_time_minutes": 120,
-  "points": 150,
+  "title": "Author Identification from Literary Text",
+  "subcategory": "nlp_text_classification",
+  "difficulty": "intermediate",
+  "estimated_time_minutes": 90,
+  "points": 120,
   "tags": [
-    "materials-science",
-    "multi-target-regression", 
-    "crystal-structure",
-    "feature-engineering",
-    "geometric-data",
-    "rmsle-optimization"
+    "nlp",
+    "text-classification",
+    "author-identification",
+    "literary-analysis",
+    "multi-class-classification",
+    "feature-engineering"
   ],
   "skills_assessed": [
-    "materials_informatics",
-    "multi_target_regression",
-    "geometric_feature_extraction",
-    "crystal_structure_analysis",
-    "scientific_data_processing",
-    "feature_engineering"
+    "text_preprocessing",
+    "feature_extraction",
+    "multi_class_classification",
+    "nlp_techniques",
+    "model_evaluation",
+    "literary_analysis"
   ],
   "prerequisites": [
     "machine_learning_fundamentals",
-    "regression_techniques",
-    "feature_engineering",
-    "scientific_computing",
+    "text_processing_basics",
+    "classification_techniques",
     "pandas_numpy_proficiency"
   ],
   "learning_outcomes": [
-    "Apply ML to materials science problems",
-    "Extract features from 3D atomic structures",
-    "Handle heterogeneous scientific datasets",
-    "Optimize multi-target regression models"
+    "Apply NLP to literary analysis",
+    "Build text classification models",
+    "Extract meaningful features from text",
+    "Handle multi-class probability predictions"
   ],
-  "source": "MLE-Bench NOMAD 2018",
-  "dataset": "nomad2018-predict-transparent-conductors",
+  "dataset": "spooky-author-identification",
   "version": "1.0.0",
   "last_updated": "2025-07-05"
 }
