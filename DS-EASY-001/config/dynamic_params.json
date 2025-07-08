@@ -1,0 +1,64 @@
+{
+  "rule_based_params": {
+    "array_length": {
+      "type": "integer",
+      "min": 50,
+      "max": 200,
+      "description": "Number of days in the profit/loss forecast period."
+    },
+    "k_subarrays": {
+      "type": "integer",
+      "min": 2,
+      "max": 10,
+      "description": "The number of non-overlapping project batches to select."
+    },
+    "m_min_length": {
+      "type": "integer",
+      "min": 1,
+      "max": 5,
+      "description": "The minimum required duration (in days) for each project batch."
+    },
+    "profit_value_min": {
+      "type": "integer",
+      "min": -100,
+      "max": -1,
+      "description": "Minimum daily loss value."
+    },
+    "profit_value_max": {
+      "type": "integer",
+      "min": 1,
+      "max": 100,
+      "description": "Maximum daily profit value."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for a quantitative finance firm or a high-tech project management consultancy. Examples: 'QuantEdge Capital', 'InnovaStrat Projects', 'Apex Financial Engineering'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "scenario_context": {
+      "prompt": "You are a senior quantitative strategist at {company_name}. Your team is analyzing a series of daily profit/loss projections to optimize investment strategies. The goal is to identify the best combination of project batches to maximize total return.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name"]
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for calculating the maximum sum of k non-overlapping subarrays. Examples: 'maximize_portfolio_return', 'optimize_batch_selection', 'find_max_profit_schedule'. Return only the function name.",
+      "max_tokens": 15,
+      "temperature": 0.6
+    },
+    "data_unit": {
+      "prompt": "Generate a plausible unit for daily financial data. Examples: 'daily profit in thousands USD', 'projected daily returns', 'asset value change'. Return only the unit name.",
+      "max_tokens": 10,
+      "temperature": 0.5
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "k_must_be_solvable": "k <= floor(array_length / m_min_length)"
+  }
+}

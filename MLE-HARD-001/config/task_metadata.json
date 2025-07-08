@@ -1,0 +1,38 @@
+{
+  "task_id": "MLE-HARD-001",
+  "category": "algorithm",
+  "title": "Sensor Array Calibration Optimization",
+  "subcategory": "dynamic_programming_with_sliding_window",
+  "difficulty": "hard",
+  "estimated_time_minutes": 90,
+  "points": 100,
+  "tags": [
+    "dynamic-programming",
+    "sliding-window",
+    "median",
+    "sorting",
+    "prefix-sum",
+    "optimization"
+  ],
+  "skills_assessed": [
+    "complex_algorithmic_problem_solving",
+    "efficient_sliding_window_implementation",
+    "data_structure_selection_for_median_finding",
+    "dynamic_programming_state_design",
+    "multi-step_problem_decomposition"
+  ],
+  "prerequisites": [
+    "advanced_dynamic_programming",
+    "sliding_window_technique",
+    "prefix_sum_calculation",
+    "understanding_of_medians"
+  ],
+  "learning_outcomes": [
+    "Combine sliding window and DP to solve complex problems",
+    "Apply the median property to minimize L1 norm (sum of absolute differences)",
+    "Develop multi-stage algorithms to break down a hard problem into manageable parts"
+  ],
+  "original_url": "https://leetcode.com/problems/minimum-operations-to-make-elements-within-k-subarrays-equal/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-06"
+}

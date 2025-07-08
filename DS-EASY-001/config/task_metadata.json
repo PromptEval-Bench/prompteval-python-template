@@ -1,0 +1,36 @@
+{
+  "task_id": "DS-EASY-001",
+  "category": "algorithm",
+  "title": "Optimizing Profit from Project Batches",
+  "subcategory": "dynamic_programming",
+  "difficulty": "easy",
+  "estimated_time_minutes": 25,
+  "points": 100,
+  "tags": [
+    "dynamic-programming",
+    "arrays",
+    "prefix-sum",
+    "optimization",
+    "sliding-window"
+  ],
+  "skills_assessed": [
+    "advanced_algorithmic_thinking",
+    "dynamic_programming_implementation",
+    "problem_decomposition",
+    "handling_complex_constraints",
+    "optimization_strategies"
+  ],
+  "prerequisites": [
+    "dynamic_programming_concepts",
+    "advanced_array_manipulation",
+    "prefix_sum_technique"
+  ],
+  "learning_outcomes": [
+    "Apply dynamic programming to solve complex optimization problems",
+    "Efficiently handle constraints involving non-overlapping subarrays",
+    "Implement multi-dimensional DP states to track complex conditions"
+  ],
+  "original_url": "https://leetcode.com/problems/sum-of-k-subarrays-with-length-at-least-m/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-06"
+}

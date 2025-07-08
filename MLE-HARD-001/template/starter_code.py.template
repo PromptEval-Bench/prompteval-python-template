@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""
+Sensor Array Calibration Optimizer
+{{company_name}} - R&D Department
+
+Task: Implement the core logic to find the minimum cost for sensor calibration.
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import json
+from typing import List
+
+def load_task_data(filename: str = 'task_data.json') -> dict:
+    """
+    Loads the task data (sensor readings, x, k) from a JSON file.
+    
+    Args:
+        filename: The path to the task data file.
+        
+    Returns:
+        A dictionary containing the task parameters.
+    """
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+def {{function_name}}(nums: List[int], x: int, k: int) -> int:
+    """
+    Calculates the minimum number of operations to have at least k 
+    non-overlapping subarrays of size exactly x, where all elements 
+    within each subarray are equal.
+
+    An operation consists of increasing or decreasing any element by 1.
+
+    Args:
+        nums: A list of integers representing raw sensor readings.
+        x: The size of each sensor batch to be calibrated.
+        k: The number of non-overlapping batches that must be calibrated.
+
+    Returns:
+        The minimum total number of operations (calibration cost).
+    """
+    
+    # TODO: Implement your solution here.
+    #
+    # This is a multi-step problem. Consider this approach:
+    #
+    # 1.  **Calculate Costs:** First, figure out the minimum cost to make *any*
+    #     subarray of size `x` uniform. The cost to make a set of numbers
+    #     equal is minimized when all numbers are changed to their MEDIAN.
+    #     You can use a sliding window approach to efficiently calculate this
+    #     cost for all possible subarrays of size `x`.
+    #
+    # 2.  **Select Subarrays:** After step 1, you will have a list of costs.
+    #     The problem is now transformed into: "Select k non-overlapping
+    #     intervals (of length x) with the minimum total cost". This is a
+    #     classic dynamic programming problem.
+    #
+    # 3.  **DP State:** A possible DP state could be `dp[i]`, representing
+    #     the minimum cost to calibrate some number of batches within the
+    #     first `i` sensor readings. You'll need to figure out the
+    #     transition to solve for `k` batches.
+    
+    pass
+
+
+def main():
+    """
+    Main function to load data, run the optimization, and print the result.
+    """
+    try:
+        task_data = load_task_data()
+        nums = task_data['nums']
+        x = task_data['x']
+        k = task_data['k']
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Please run the init script.")
+        return
+
+    print(f"🏢 Company: {{company_name}}")
+    print(f"📡 Analyzing {len(nums)} sensor readings...")
+    print(f"   - Batch Size (x): {x}")
+    print(f"   - Batches to Calibrate (k): {k}")
+    
+    # Run the optimization function
+    min_cost = {{function_name}}(nums, x, k)
+    
+    # Display the result
+    if min_cost is not None:
+        print(f"\n✅ Optimization complete.")
+        print(f"   Minimum Calibration Cost: {min_cost} operations")
+    else:
+        print("\n⚠️  The function did not return a result.")
+
+if __name__ == "__main__":
+    main()

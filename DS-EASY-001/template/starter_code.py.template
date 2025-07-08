@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""
+Profit Optimization Engine
+{{company_name}} - Quantitative Strategy Division
+
+Task: Implement the core logic to find the maximum possible profit.
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import json
+from typing import List
+
+def load_task_data(filename: str = 'task_data.json') -> dict:
+    """
+    Loads the task data (profit projections, k, m) from a JSON file.
+    
+    Args:
+        filename: The path to the task data file.
+        
+    Returns:
+        A dictionary containing the task parameters.
+    """
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+def {{function_name}}(nums: List[int], k: int, m: int) -> int:
+    """
+    Calculates the maximum sum of k non-overlapping subarrays of nums, 
+    where each subarray has a length of at least m.
+
+    Args:
+        nums: A list of integers representing daily profit/loss projections.
+        k: The number of non-overlapping subarrays (project batches) to select.
+        m: The minimum length of each subarray (project duration).
+
+    Returns:
+        The maximum possible sum (total profit).
+        
+    Constraints:
+        - 1 <= len(nums) <= 2000
+        - -10^4 <= nums[i] <= 10^4
+        - 1 <= k <= floor(len(nums) / m)
+        - 1 <= m <= 5
+    """
+    
+    # TODO: Implement your dynamic programming solution here.
+    #
+    # Hint: This is a complex optimization problem. Consider a DP state
+    # that tracks the position in the array, the number of subarrays
+    # used so far, and potentially other conditions.
+    #
+    # A possible DP state could be dp[i][j], representing the max profit
+    # using j subarrays within the first i elements. You might need to
+    # think about how to enforce the non-overlapping and minimum length
+    # constraints efficiently.
+    
+    pass
+
+
+def main():
+    """
+    Main function to load data, run the optimization, and print the result.
+    """
+    # Load task data from the generated file
+    try:
+        task_data = load_task_data()
+        nums = task_data['nums']
+        k = task_data['k']
+        m = task_data['m']
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Did the init script run correctly?")
+        return
+
+    print(f"🏢 Company: {{company_name}}")
+    print(f"📈 Analyzing {len(nums)} days of profit projections...")
+    print(f"   - Batches to select (k): {k}")
+    print(f"   - Minimum duration (m): {m}")
+    
+    # Run the optimization function
+    max_profit = {{function_name}}(nums, k, m)
+    
+    # Display the result
+    if max_profit is not None:
+        print(f"\n✅ Optimization complete.")
+        print(f"   Maximum possible profit: {max_profit}")
+    else:
+        print("\n⚠️  The function did not return a result.")
+
+if __name__ == "__main__":
+    main()

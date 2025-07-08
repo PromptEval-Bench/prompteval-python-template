@@ -1,0 +1,64 @@
+{
+  "rule_based_params": {
+    "sensor_reading_count": {
+      "type": "integer",
+      "min": 1000,
+      "max": 10000,
+      "description": "Total number of sensor readings in the data stream."
+    },
+    "batch_size": {
+      "type": "integer",
+      "min": 10,
+      "max": 100,
+      "description": "The fixed size of each sensor batch to be calibrated (x)."
+    },
+    "num_batches_to_calibrate": {
+      "type": "integer",
+      "min": 2,
+      "max": 15,
+      "description": "The number of non-overlapping batches to calibrate (k)."
+    },
+    "reading_value_min": {
+      "type": "integer",
+      "min": -1000,
+      "max": -1,
+      "description": "Minimum sensor reading value."
+    },
+    "reading_value_max": {
+      "type": "integer",
+      "min": 1,
+      "max": 1000,
+      "description": "Maximum sensor reading value."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for a high-tech industrial automation or robotics company. Examples: 'OmniDynamics', 'Precision Sensors Inc.', 'Acuity Robotics'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "scenario_context": {
+      "prompt": "You are a lead engineer at {company_name}, a company specializing in industrial automation. A critical production line uses a large array of sensors, and their readings tend to drift. To ensure quality control, you must periodically recalibrate the sensors.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name"]
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for minimizing the cost of calibrating sensor subarrays. Examples: 'minimize_calibration_cost', 'optimize_sensor_alignment', 'get_min_calibration_ops'. Return only the function name.",
+      "max_tokens": 15,
+      "temperature": 0.6
+    },
+    "data_unit": {
+      "prompt": "Generate a plausible physical unit for a sensor reading. Examples: 'voltage (mV)', 'pressure (Pa)', 'vibration frequency (Hz)', 'temperature (C)'. Return only the unit name.",
+      "max_tokens": 10,
+      "temperature": 0.5
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "ensure_solvability": "num_batches_to_calibrate * batch_size <= sensor_reading_count"
+  }
+}
