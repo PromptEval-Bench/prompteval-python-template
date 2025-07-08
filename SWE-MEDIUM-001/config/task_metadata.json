@@ -1,0 +1,36 @@
+{
+  "task_id": "SWE-MEDIUM-001",
+  "category": "algorithm",
+  "title": "User Mention Analytics Engine",
+  "subcategory": "event_processing",
+  "difficulty": "medium",
+  "estimated_time_minutes": 45,
+  "points": 75,
+  "tags": [
+    "event-sourcing",
+    "state-management",
+    "string-parsing",
+    "simulation",
+    "data-aggregation"
+  ],
+  "skills_assessed": [
+    "stateful_logic_implementation",
+    "data_structure_usage",
+    "string_manipulation_and_parsing",
+    "attention_to_detail",
+    "handling_edge_cases_in_time-series_data"
+  ],
+  "prerequisites": [
+    "dictionary_and_list_manipulation",
+    "basic_string_operations",
+    "understanding_of_programmatic_state"
+  ],
+  "learning_outcomes": [
+    "Implement a system that processes and reacts to a sequence of timed events",
+    "Manage the state of multiple entities (users) over time",
+    "Parse structured and semi-structured string data to drive logic"
+  ],
+  "original_url": "https://leetcode.com/problems/count-mentions-per-user/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-06"
+}

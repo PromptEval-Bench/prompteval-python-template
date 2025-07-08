@@ -1,0 +1,51 @@
+{
+  "rule_based_params": {
+    "employee_count": {
+      "type": "integer",
+      "min": 10,
+      "max": 50,
+      "description": "Total number of employees on the platform."
+    },
+    "event_count": {
+      "type": "integer",
+      "min": 20,
+      "max": 80,
+      "description": "Total number of events to process."
+    },
+    "max_timestamp": {
+      "type": "integer",
+      "min": 100,
+      "max": 1000,
+      "description": "The maximum possible timestamp for an event."
+    },
+    "offline_duration": {
+      "type": "integer",
+      "value": 60,
+      "description": "Fixed duration an employee stays offline."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a plausible name for a modern tech or enterprise software company. Examples: 'Innovate Corp', 'Synergy Solutions', 'NextGen Systems'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "platform_name": {
+      "prompt": "Generate a plausible name for an internal team collaboration platform. Examples: 'SyncUp', 'TeamHub', 'ConnectSphere'. Return only the platform name.",
+      "max_tokens": 15,
+      "temperature": 0.7
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for processing user mention events. Examples: 'process_mention_events', 'calculate_user_mentions', 'analyze_communication_log'. Return only the function name.",
+      "max_tokens": 15,
+      "temperature": 0.6
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "offline_event_validity": "An OFFLINE event can only be generated for a user who is currently online."
+  }
+}

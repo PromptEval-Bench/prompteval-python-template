@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+"""
+User Mention Analytics Engine for {{platform_name}}
+Developed by: {{company_name}}
+
+Task: Process a log of events to count mentions for each user.
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import json
+from typing import List
+
+def load_task_data(filename: str = 'task_data.json') -> dict:
+    """
+    Loads the task data (number of users, event log) from a JSON file.
+    
+    Args:
+        filename: The path to the task data file.
+        
+    Returns:
+        A dictionary containing the task parameters.
+    """
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+def {{function_name}}(numberOfUsers: int, events: List[List[str]]) -> List[int]:
+    """
+    Processes a list of events to count how many times each user is mentioned.
+
+    Args:
+        numberOfUsers: The total number of users in the system, with IDs from 0 to numberOfUsers - 1.
+        events: A list of events, already sorted by timestamp. Each event is a list of three strings.
+
+    Returns:
+        A list of integers of size `numberOfUsers`, where the value at index `i` is the
+        total number of mentions for user `i`.
+    """
+    
+    # HINT: You will need to manage the state of each user (online/offline).
+    # A dictionary or list to store the timestamp when a user comes back online
+    # can be very helpful.
+    # For example: user_online_again_at[user_id] = offline_timestamp + 60
+    
+    # HINT: Remember to process status changes (OFFLINE events and users coming
+    # back online) *before* processing MESSAGE events at the same timestamp.
+    
+    mention_counts = [0] * numberOfUsers
+    # TODO: Initialize your state management data structures here.
+    
+    for event_type, timestamp_str, payload in events:
+        timestamp = int(timestamp_str)
+        
+        # TODO: First, update the set of currently online users based on the current timestamp.
+        
+        if event_type == "OFFLINE":
+            # TODO: Handle an OFFLINE event. Update the user's state.
+            pass
+            
+        elif event_type == "MESSAGE":
+            # TODO: Handle a MESSAGE event.
+            # 1. Parse the 'payload' string.
+            # 2. Determine which users are mentioned based on the token (id<number>, ALL, HERE).
+            # 3. Increment the mention counts for the targeted users.
+            pass
+            
+    return mention_counts
+
+
+def main():
+    """
+    Main function to load data, run the analysis, and print the result.
+    """
+    try:
+        task_data = load_task_data()
+        numberOfUsers = task_data['numberOfUsers']
+        events = task_data['events']
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Please run the init script.")
+        return
+
+    print(f"🏢 Company: {{company_name}}")
+    print(f"📊 Analyzing mention data for the '{{platform_name}}' platform...")
+    print(f"   - Users to analyze: {numberOfUsers}")
+    print(f"   - Events to process: {len(events)}")
+    
+    # Run the analysis function
+    result = {{function_name}}(numberOfUsers, events)
+    
+    # Display the result
+    if result is not None:
+        print(f"\n✅ Analysis complete.")
+        print(f"   Mention counts per user: {result}")
+    else:
+        print("\n⚠️  The function did not return a result.")
+
+if __name__ == "__main__":
+    main()
