@@ -1,0 +1,43 @@
+{
+  "rule_based_params": {
+    "data_stream_length": {
+      "type": "integer",
+      "min": 10,
+      "max": 50,
+      "description": "The initial number of data packets in the buffer."
+    },
+    "max_data_value": {
+      "type": "integer",
+      "min": 10,
+      "max": 50,
+      "description": "The maximum value for a data packet ID."
+    },
+    "batch_discard_size": {
+      "type": "integer",
+      "value": 3,
+      "description": "The fixed number of elements to discard in each operation."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a plausible name for a data processing or IoT company. Examples: 'Streamline Data', 'Confluent Systems', 'IoT Innovations'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "device_name": {
+      "prompt": "Generate a plausible name for a networked device that sends data. Examples: 'Weather Station X-2000', 'Factory Sensor Grid', 'Smart Meter v3'. Return only the device name.",
+      "max_tokens": 20,
+      "temperature": 0.7
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for calculating the minimum buffer clearing operations. Examples: 'get_min_discard_ops', 'validate_data_buffer', 'calculate_cleanup_operations'. Return only the function name.",
+      "max_tokens": 15,
+      "temperature": 0.6
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {}
+}

@@ -1,0 +1,86 @@
+#!/usr/bin/env python3
+"""
+Data Stream Buffer Cleanup Utility
+{{company_name}} - Device Engineering Team
+
+Task: Calculate the minimum operations to ensure the data buffer has distinct elements.
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import json
+from typing import List
+
+def load_task_data(filename: str = 'task_data.json') -> dict:
+    """
+    Loads the task data (the initial buffer state) from a JSON file.
+    
+    Args:
+        filename: The path to the task data file.
+        
+    Returns:
+        A dictionary containing the task parameters.
+    """
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+def {{function_name}}(nums: List[int]) -> int:
+    """
+    Calculates the minimum number of discard operations to make the elements
+    in the data buffer distinct.
+
+    An operation consists of removing 3 elements from the beginning of the buffer.
+    If fewer than 3 elements remain, all are removed.
+
+    Args:
+        nums: A list of integers representing the initial state of the data buffer.
+
+    Returns:
+        The minimum number of operations required.
+    """
+    
+    # HINT: You can solve this problem by simulating the process step-by-step.
+    # Start with 0 operations, check if the buffer is valid (has distinct elements).
+    # If not, try 1 operation, check the remaining buffer, and so on.
+    
+    # HINT: How can you efficiently check if all elements in a list are distinct?
+    # Consider the properties of a Set data structure.
+    
+    number_of_operations = 0
+    current_buffer = nums
+    
+    # TODO: Implement the simulation logic here.
+    # You'll need a loop that continues as long as the buffer is not distinct
+    # and not empty. In each iteration, perform one discard operation and
+    # increment your operation counter.
+    
+    pass
+
+
+def main():
+    """
+    Main function to load data, run the analysis, and print the result.
+    """
+    try:
+        task_data = load_task_data()
+        nums = task_data['nums']
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Please run the init script.")
+        return
+
+    print(f"🏢 Company: {{company_name}}")
+    print(f"📡 Analyzing data buffer from device '{{device_name}}'...")
+    print(f"   - Initial buffer size: {len(nums)}")
+    
+    # Run the analysis function
+    result = {{function_name}}(nums)
+    
+    # Display the result
+    if result is not None:
+        print(f"\n✅ Analysis complete.")
+        print(f"   Minimum cleanup operations required: {result}")
+    else:
+        print("\n⚠️  The function did not return a result.")
+
+if __name__ == "__main__":
+    main()

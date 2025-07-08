@@ -1,0 +1,35 @@
+{
+  "task_id": "SDE-SIMPLE-001",
+  "category": "algorithm",
+  "title": "Data Stream Buffer Cleanup",
+  "subcategory": "array_processing",
+  "difficulty": "easy",
+  "estimated_time_minutes": 20,
+  "points": 25,
+  "tags": [
+    "arrays",
+    "simulation",
+    "set",
+    "hashing",
+    "loops"
+  ],
+  "skills_assessed": [
+    "problem_comprehension",
+    "array_slicing",
+    "use_of_sets_for_uniqueness",
+    "iterative_logic",
+    "basic_algorithm_implementation"
+  ],
+  "prerequisites": [
+    "basic_python_syntax",
+    "understanding_of_lists_and_sets"
+  ],
+  "learning_outcomes": [
+    "Implement a straightforward simulation based on problem requirements",
+    "Effectively use a Set data structure to check for uniqueness",
+    "Translate a simple iterative process into code"
+  ],
+  "original_url": "https://leetcode.com/problems/minimum-number-of-operations-to-make-elements-in-array-distinct/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-06"
+}

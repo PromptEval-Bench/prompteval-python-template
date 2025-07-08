@@ -1,0 +1,66 @@
+# ⚙️ Engineering Task: Data Stream Buffer Cleanup
+
+**Organization:** `{{company_name}}`  
+**Team:** Device Engineering  
+**Date:** `{{current_date}}`
+
+---
+
+### **Scenario**
+
+You are a Software Development Engineer at `{{company_name}}`. Your team is responsible for processing incoming data streams from our `{{device_name}}` devices. Due to potential network buffering issues, the initial packets in a data stream can sometimes contain duplicated IDs. Our processing system requires that the list of data IDs it works on must be **distinct** (contain no duplicates).
+
+To solve this, we've implemented a simple cleanup strategy: discard a fixed-size batch of data from the beginning of the buffer. Your task is to write a utility function that determines the minimum number of times we need to perform this discard operation to satisfy the distinctness requirement.
+
+### **Your Mission**
+
+Implement the function `{{function_name}}` that calculates the minimum number of "discard operations" needed to make the elements in a given data buffer (`nums`) distinct.
+
+**The Discard Operation:**
+-   Remove **3** elements from the beginning of the array.
+-   If the array has fewer than 3 elements, remove all of them.
+
+An empty array is considered to have distinct elements.
+
+### **Technical Specifications**
+
+Implement the Python function with the following signature:
+
+```python
+def {{function_name}}(nums: List[int]) -> int:
+```
+
+#### **Returns**
+
+-   `int`: The minimum number of operations required. If the array is already distinct, the answer is `0`.
+
+### **Examples**
+
+**Example 1:**
+
+-   `nums = [1, 2, 3, 4, 2, 3, 3, 5, 7]`
+-   **Output:** `2`
+-   **Explanation:**
+    1.  After 1 operation: `[4, 2, 3, 3, 5, 7]` (still has duplicates).
+    2.  After 2 operations: `[3, 5, 7]` (distinct).
+
+**Example 2:**
+
+-   `nums = [4, 5, 6, 4, 4]`
+-   **Output:** `2`
+-   **Explanation:**
+    1.  After 1 operation: `[4, 4]` (still has duplicates).
+    2.  After 2 operations: `[]` (empty, thus distinct).
+
+**Example 3:**
+
+-   `nums = [6, 7, 8, 9]`
+-   **Output:** `0`
+-   **Explanation:** The initial buffer is already distinct.
+
+### **How to Work**
+
+1.  **Understand the Logic**: Read the hints in `solution.py`. The simplest approach is to simulate the process.
+2.  **Implement**: Write your solution in `solution.py`.
+3.  **Test**: Run `python solution.py` to test your code against the `task_data.json` generated for you.
+4.  **Submit**: When you are confident, run `./scripts/submit.sh` in the terminal.
