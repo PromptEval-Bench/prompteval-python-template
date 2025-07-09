@@ -1,0 +1,26 @@
+{
+  "rule_based_params": {
+    "pydicom_version": {
+      "type": "string",
+      "value": "2.3.0",
+      "description": "The version of pydicom where the bug is present."
+    }
+  },
+  "llm_variations": {
+    "team_name": {
+      "prompt": "Generate a plausible name for a core development team in an open-source medical software project. Examples: 'Core Utilities Team', 'DICOM Standards Group', 'IO & Parsing Squad'. Return only the team name.",
+      "max_tokens": 20,
+      "temperature": 0.7
+    },
+    "project_name": {
+      "prompt": "Generate a formal name for this internal bug fix task. Examples: 'Q3-Codify-Refinement', 'Task-1674-SeqGen-Fix', 'DICOM-IO-Patch-2.3.1'. Return only the name.",
+      "max_tokens": 20,
+      "temperature": 0.6
+    },
+    "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {}
+}

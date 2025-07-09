@@ -1,0 +1,41 @@
+{
+  "task_id": "SWE-HARD-002",
+  "category": "project",
+  "title": "Fixing Sequence Generation in DICOM Codify Utility",
+  "subcategory": "code_generation",
+  "difficulty": "hard",
+  "estimated_time_minutes": 50,
+  "points": 150,
+  "tags": [
+    "debugging",
+    "code-comprehension",
+    "recursion",
+    "code-generation",
+    "pydicom"
+  ],
+  "skills_assessed": [
+    "deep_code_debugging",
+    "understanding_complex_and_recursive_logic",
+    "stateful_code_generation",
+    "problem_isolation",
+    "library_contribution_aptitude"
+  ],
+  "prerequisites": [
+    "strong_python_knowledge",
+    "experience_with_file_parsing_or_code_generation_concepts",
+    "ability_to_navigate_an_existing_codebase"
+  ],
+  "learning_outcomes": [
+    "Debug issues in a recursive code generation script",
+    "Understand the intricacies of representing complex data structures as source code",
+    "Gain experience with the pydicom library's internal workings"
+  ],
+  "original_url": "https://github.com/pydicom/pydicom/issues/1674",
+  "repo_info": {
+    "repo": "pydicom/pydicom",
+    "instance_id": "pydicom__pydicom-1674",
+    "base_commit": "e77e6586fa38e6f7e98efca80d560d0fea8a9669"
+  },
+  "version": "1.0.0",
+  "last_updated": "2025-07-06"
+}

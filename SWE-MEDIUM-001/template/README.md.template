@@ -1,0 +1,63 @@
+# 📊 Engineering Task: User Mention Analytics Engine
+
+**Organization:** `{{company_name}}`  
+**Product:** `{{platform_name}}` Communication Platform  
+**Date:** `{{current_date}}`  
+**Priority:** High
+
+---
+
+### **Scenario**
+
+At `{{company_name}}`, our internal communication platform, `{{platform_name}}`, is the lifeblood of our collaboration. To better understand communication patterns, the product team wants to build a feature that analyzes how frequently each employee is mentioned in messages. You have been tasked with building the core analytics engine for this feature.
+
+### **Your Mission**
+
+You need to implement the function `{{function_name}}` that processes a log of platform events. The function must accurately count the total number of mentions for each employee across all messages.
+
+The system has `{{employee_count}}` employees, with unique IDs from `0` to `{{employee_count - 1}}`. All employees are initially **online**.
+
+### **Event Types**
+
+Your function will receive a list of events, sorted by timestamp. There are two types of events:
+
+1.  **Message Event**: `["MESSAGE", "timestamp", "mentions_string"]`
+    -   This indicates a message was sent at a specific `timestamp`.
+    -   The `mentions_string` contains tokens that specify who was mentioned:
+        -   `id<number>`: Mentions a specific employee (e.g., `id0`, `id15`). A single string can contain multiple such IDs separated by spaces (e.g., `"id3 id8 id3"`). Note that a user can be mentioned multiple times in one message.
+        -   `ALL`: Mentions **all** employees on the platform, regardless of their online/offline status.
+        -   `HERE`: Mentions only the employees who are **currently online** at that exact timestamp.
+
+2.  **Offline Event**: `["OFFLINE", "timestamp", "user_id"]`
+    -   This indicates that the employee with `user_id` went offline at `timestamp`.
+    -   They will remain offline for **60 time units** and automatically come back online at `timestamp + 60`.
+
+**Important Rule:** At any given timestamp, status changes (a user going offline or coming back online) are processed **before** any message events at that same timestamp.
+
+### **Technical Specifications**
+
+Implement the Python function with the following signature:
+
+```python
+def {{function_name}}(numberOfUsers: int, events: List[List[str]]) -> List[int]:```
+
+**Returns:**
+
+-   A list of integers of size `numberOfUsers`. The value at index `i` must be the total number of times user `i` was mentioned.
+
+### **Example**
+
+-   `numberOfUsers = 2`, `events = [["MESSAGE","10","id1 id0"],["OFFLINE","11","0"],["MESSAGE","71","HERE"]]`
+-   **Expected Output:** `[2, 2]`
+-   **Explanation:**
+    -   Initially, users 0 and 1 are online.
+    -   At `t=10`, user 0 and 1 are mentioned. Counts: `[1, 1]`.
+    -   At `t=11`, user 0 goes offline. They will be back online at `t=71`.
+    -   At `t=71`, user 0 automatically comes back online *before* the message is processed. `HERE` mentions all online users, so both 0 and 1 are mentioned. Counts: `[2, 2]`.
+
+### **How to Work**
+
+1.  **Plan Your State**: Think about how you will track each user's online/offline status over time.
+2.  **Implement**: Write your solution in `solution.py`.
+3.  **Test**: Run `python solution.py` to test your code against the `task_data.json` generated for you.
+4.  **Submit**: When you are confident, run `./scripts/submit.sh` in the terminal.
