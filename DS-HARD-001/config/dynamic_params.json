@@ -1,0 +1,60 @@
+{
+  "rule_based_params": {
+    "transaction_count": {
+      "type": "integer",
+      "min": 60000,
+      "max": 100000,
+      "description": "Total number of transactions in the historical data series."
+    },
+    "window_size": {
+      "type": "integer",
+      "min": 1000,
+      "max": 5000,
+      "description": "The rolling window size (k) for cohort analysis."
+    },
+    "top_segments": {
+      "type": "integer",
+      "min": 5,
+      "max": 50,
+      "description": "The number of top frequent segments (x) to analyze."
+    },
+    "max_transaction_value": {
+      "type": "integer",
+      "min": 1000,
+      "max": 5000,
+      "description": "The maximum possible value for a single transaction."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for a data-driven e-commerce or marketing analytics firm. Examples: 'NexusData Analytics', 'Insight Commerce', 'TrendSpire Solutions'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "scenario_context": {
+      "prompt": "You are a Data Scientist at {company_name}, a leader in data-driven e-commerce solutions. Your mission is to develop a robust algorithm to calculate a new metric, the '{metric_name}', across a rolling time window of customer transactions. This will empower the marketing team to see, on a day-by-day basis, which customer cohorts are driving the most value and how this trend evolves. Write a short, encouraging paragraph (2-3 sentences) for the project brief, explaining why this analysis is crucial.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name", "metric_name"]
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for calculating a focused sum on rolling cohorts of data. Use snake_case. Examples: 'calculate_focused_cohort_value', 'analyze_core_segment_sum', 'compute_rolling_x_sum'. Return only the function name.",
+      "max_tokens": 20,
+      "temperature": 0.6
+    },
+    "metric_name": {
+      "prompt": "Invent a business-friendly name for a metric that sums the values of the most frequent items in a list. Examples: 'Core Contributor Value', 'High-Frequency Signal Sum', 'Key Segment Revenue'. Return only the name, title-cased.",
+      "max_tokens": 20,
+      "temperature": 0.7
+    }
+  },
+  "system_params": {
+     "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "solvability_check": "top_segments <= window_size"
+  }
+}

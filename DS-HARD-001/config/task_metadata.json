@@ -1,0 +1,37 @@
+{
+  "task_id": "DS-HARD-001",
+  "category": "algorithm",
+  "title": "Dynamic Customer Cohort Value Analysis",
+  "subcategory": "sliding-window",
+  "difficulty": "hard",
+  "estimated_time_minutes": 40,
+  "points": 300,
+  "tags": [
+    "sliding-window",
+    "data-structures",
+    "heap",
+    "frequency-counting",
+    "optimization",
+    "time-complexity"
+  ],
+  "skills_assessed": [
+    "algorithmic_optimization",
+    "efficient_data_structure_usage",
+    "sliding_window_technique",
+    "time_complexity_analysis",
+    "problem_decomposition"
+  ],
+  "prerequisites": [
+    "advanced_sliding_window_concepts",
+    "heap_data_structure_(priority_queue)",
+    "hash_maps_for_frequency_counting"
+  ],
+  "learning_outcomes": [
+    "Apply advanced data structures to optimize sliding window problems",
+    "Develop algorithms that efficiently update state instead of re-computing from scratch",
+    "Analyze and solve problems with complex, multi-part constraints"
+  ],
+  "original_url": "https://leetcode.com/problems/find-x-sum-of-all-k-long-subarrays-ii/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-08"
+}

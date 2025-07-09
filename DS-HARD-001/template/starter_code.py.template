@@ -1,0 +1,91 @@
+# -*- coding: utf-8 -*-
+"""
+Solution for {{company_name}} - {{title}}
+Date: {{current_date}}
+"""
+import json
+from collections import Counter
+import heapq
+
+def {{function_name}}(transaction_values: list[int], window_size: int, top_segments: int) -> list[int]:
+    """
+    Calculates the '{{metric_name}}' for all k-long sliding windows.
+
+    Args:
+        transaction_values: A list of integers representing customer transaction values.
+        window_size: The integer k, the size of the sliding window.
+        top_segments: The integer x, the number of top frequent segments to consider.
+
+    Returns:
+        A list of integers, where each element is the calculated core value for a window.
+    """
+    
+    n = len(transaction_values)
+    if n < window_size:
+        return []
+
+    # --- Your implementation starts here ---
+    # This is a challenging problem. A naive approach for each window will be too slow.
+    # Consider how to efficiently update the counts and the top-x selection
+    # as the window slides. Good luck!
+    
+    result = []
+    
+    # Example of a naive approach for a single window (will be too slow for the full dataset)
+    # You need to optimize this!
+    for i in range(n - window_size + 1):
+        window = transaction_values[i : i + window_size]
+        
+        counts = Counter(window)
+        distinct_elements = list(counts.keys())
+        
+        if len(distinct_elements) <= top_segments:
+            result.append(sum(window))
+            continue
+            
+        # Sort by frequency (desc), then by value (desc) for tie-breaking
+        distinct_elements.sort(key=lambda val: (counts[val], val), reverse=True)
+        
+        core_segments = set(distinct_elements[:top_segments])
+        
+        current_sum = 0
+        for val in window:
+            if val in core_segments:
+                current_sum += val
+        result.append(current_sum)
+        
+    return result
+    # --- Your implementation ends here ---
+
+
+# --- Main execution block to test your solution ---
+if __name__ == '__main__':
+    print("🚀 Running local test for {{title}}...")
+    try:
+        with open('task_data.json', 'r') as f:
+            data = json.load(f)
+        
+        transactions = data['transaction_values']
+        k = data['window_size']
+        x = data['top_segments']
+
+        print(f"🏢 Company: {data['company_name']}")
+        print(f"📊 Input data: {len(transactions)} transactions, window_size={k}, top_segments={x}")
+        
+        # To avoid printing a huge list for the full dataset, we'll test with a small slice
+        test_transactions = transactions[:100] if len(transactions) > 100 else transactions
+        k_test = k if len(test_transactions) >= k else len(test_transactions)
+
+        print(f"\n🧪 Testing with the first {len(test_transactions)} transactions...")
+        
+        # Call the student's function
+        final_result = {{function_name}}(test_transactions, k_test, x)
+        
+        print(f"\n✅ Calculation complete.")
+        print(f"📈 Result for the test slice (first 5 values): {final_result[:5]}")
+        print(f"Total number of cohort values calculated: {len(final_result)}")
+
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Please run the init script first.")
+    except Exception as e:
+        print(f"An error occurred during testing: {e}")

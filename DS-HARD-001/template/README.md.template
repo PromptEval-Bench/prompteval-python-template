@@ -1,0 +1,43 @@
+# **Project Brief: {{title}}**
+
+**Date:** `{{current_date}}`
+**Company:** `{{company_name}}`
+**Requesting Department:** Marketing Analytics
+**Status:** **High Priority**
+
+---
+
+### **1. Business Scenario**
+
+`{{scenario_context}}`
+
+Your mission is to develop a robust algorithm that can calculate a new proprietary metric, the **"{{metric_name}}"**, across a rolling time window of customer transactions. This will empower the marketing team to see, on a day-by-day basis, which customer cohorts are driving the most value and how this trend evolves.
+
+### **2. Technical Task: Calculating the "{{metric_name}}"**
+
+You are given a time-series list of customer transaction values. Your goal is to calculate the `{{metric_name}}` for every possible contiguous sub-array (or "cohort") of a specific length.
+
+The `{{metric_name}}` for a given cohort of transactions is calculated as follows:
+
+1.  **Frequency Analysis:** Count the occurrences of each unique transaction value within the current cohort.
+2.  **Identify Core Segments:** Identify the **top `{{top_segments}}` most frequent** transaction values. This represents our most engaged customer segments.
+3.  **Tie-Breaking Rule:** If two transaction values have the same frequency, the one with the **higher value** is considered more significant (i.e., more "core").
+4.  **Value Summation:** Calculate the sum of **all occurrences** of these identified core segment values. All other transaction values from non-core segments are ignored.
+
+**Special Case:** If a cohort contains fewer than `{{top_segments}}` distinct transaction values, all values in the cohort are considered "core", and the `{{metric_name}}` is simply the sum of all transactions in that cohort.
+
+### **3. Input Data**
+
+Your algorithm will receive its parameters from the `task_data.json` file, which contains:
+-   `transaction_values`: A list of integers representing the sequence of transaction values.
+-   `window_size`: An integer `k` defining the length of the rolling cohort to analyze.
+-   `top_segments`: An integer `x` defining the number of top frequent segments to focus on.
+
+### **4. Your Deliverable**
+
+Implement the `{{function_name}}` function in the `solution.py` file.
+
+-   **Input:** `transaction_values` (list), `window_size` (int), `top_segments` (int).
+-   **Output:** A list of integers, where the `i`-th element is the `{{metric_name}}` for the cohort starting at index `i`. The total length of the output list should be `len(transaction_values) - window_size + 1`.
+
+Good luck. The marketing team is counting on your analytical prowess.
