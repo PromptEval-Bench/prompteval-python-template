@@ -1,0 +1,34 @@
+{
+  "task_id": "DS-EASY-002",
+  "category": "project",
+  "title": "Manufacturing Process State Prediction",
+  "subcategory": "tabular-classification",
+  "difficulty": "easy",
+  "estimated_time_minutes": 30,
+  "points": 350,
+  "tags": [
+    "tabular-data",
+    "binary-classification",
+    "feature-engineering",
+    "scikit-learn",
+    "auc"
+  ],
+  "skills_assessed": [
+    "data_preprocessing_for_tabular_data",
+    "training_and_evaluating_classification_models",
+    "feature_engineering_with_continuous_and_categorical_data",
+    "model_evaluation_with_roc_auc_score"
+  ],
+  "prerequisites": [
+    "strong_proficiency_with_pandas_and_scikit-learn",
+    "understanding_of_classification_metrics_like_roc_auc"
+  ],
+  "learning_outcomes": [
+    "Build an end-to-end ML pipeline for a real-world industrial problem",
+    "Apply different strategies for handling mixed data types",
+    "Optimize a model for the AUC metric"
+  ],
+  "original_url": "https://www.kaggle.com/competitions/tabular-playground-series-may-2022",
+  "version": "1.0.0",
+  "last_updated": "2025-07-08"
+}

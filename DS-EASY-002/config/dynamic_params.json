@@ -1,0 +1,44 @@
+{
+  "rule_based_params": {
+    "random_seed": {
+      "type": "integer",
+      "min": 0,
+      "max": 9999,
+      "description": "A random seed for ensuring reproducibility in models."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for an industrial manufacturing or automation company. Examples: 'Innovate Manufacturing', 'Synth-Fabrication Inc.', 'Precision Dynamics'. Return only the name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "system_name": {
+      "prompt": "Invent a name for an AI-powered industrial process monitoring system. Examples: 'ControlFlow AI', 'ProcessGuard', 'YieldOptimizr'. Return only the name.",
+      "max_tokens": 20,
+      "temperature": 0.7
+    },
+    "scenario_context": {
+      "prompt": "You are a Data Scientist at {company_name}, a leader in smart manufacturing. We are developing '{system_name}', a new system to predict machine states in real-time. By predicting whether a machine is in a normal (0) or potential failure (1) state from sensor data, we can schedule preventative maintenance and avoid costly downtime. Your task is to build the core predictive model for this system.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name", "system_name"]
+    },
+    "model_approach_suggestion": {
+      "prompt": "Suggest a powerful model for a high-dimensional tabular classification task. Examples: 'a LightGBM or XGBoost model, known for their performance and speed', 'a TabNet model, which is a deep learning architecture for tabular data', 'an ensemble of Logistic Regression and a Random Forest classifier'. Return only the suggestion.",
+      "max_tokens": 40,
+      "temperature": 0.6
+    },
+    "feature_technique_suggestion": {
+      "prompt": "Suggest a useful feature engineering technique for this manufacturing dataset. Examples: 'one-hot encoding for the categorical features', 'creating interaction features between key continuous variables', 'applying polynomial features to capture non-linear relationships'. Return only the technique name.",
+      "max_tokens": 25,
+      "temperature": 0.5
+    }
+  },
+  "system_params": {
+     "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  }
+}

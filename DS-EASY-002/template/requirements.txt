@@ -1,0 +1,11 @@
+# For data download from Kaggle
+kaggle
+
+# Core libraries for data manipulation and machine learning
+pandas
+numpy
+scikit-learn
+
+# Libraries for data visualization in the starter code
+matplotlib
+seaborn

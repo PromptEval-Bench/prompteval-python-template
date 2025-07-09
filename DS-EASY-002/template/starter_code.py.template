@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+"""
+Manufacturing Process State Prediction - Starter Code
+Date: {{current_date}}
+"""
+
+import pandas as pd
+import numpy as np
+from pathlib import Path
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+
+# Set random seed for reproducibility
+np.random.seed({{random_seed}})
+
+# Define data paths
+DATA_DIR = Path("./")
+OUTPUT_DIR = Path("./")
+
+def load_data():
+    """Load the training and test datasets."""
+    print("1. Loading data...")
+    train_df = pd.read_csv(DATA_DIR / "train.csv")
+    test_df = pd.read_csv(DATA_DIR / "test.csv")
+    print(f"   Train shape: {train_df.shape}, Test shape: {test_df.shape}")
+    return train_df, test_df
+
+def feature_engineer(df):
+    """
+    Performs basic feature engineering.
+    This dataset has a unique character-based feature 'f_27'.
+    """
+    print("   Running basic feature engineering...")
+    # f_27 is a string of 10 characters. We can count the occurrences of each unique character.
+    for i in range(10):
+        df[f'f_27_{i}'] = df['f_27'].str.get(i).apply(ord) - ord('A')
+    
+    # One-hot encode the two categorical features
+    df = pd.get_dummies(df, columns=['f_07', 'f_08', 'f_09', 'f_10', 'f_11', 'f_12', 'f_13', 'f_14', 'f_15', 'f_16', 'f_17', 'f_18', 'f_19', 'f_20', 'f_21', 'f_22', 'f_23', 'f_24', 'f_25', 'f_26', 'f_28'], dummy_na=True)
+    
+    # Drop the original f_27
+    df = df.drop('f_27', axis=1)
+    return df
+
+def train_baseline_model(X, y):
+    """Trains a baseline Logistic Regression model."""
+    print("\n3. Training baseline model (Logistic Regression)...")
+    
+    # Align columns - crucial for when test set has different dummy variables
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state={{random_seed}}, stratify=y)
+    
+    # Scale continuous features
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_val_scaled = scaler.transform(X_val)
+    
+    # Train model
+    model = LogisticRegression(solver='liblinear', random_state={{random_seed}})
+    model.fit(X_train_scaled, y_train)
+    
+    # Evaluate
+    val_preds = model.predict_proba(X_val_scaled)[:, 1]
+    auc = roc_auc_score(y_val, val_preds)
+    print(f"   Validation AUC: {auc:.4f}")
+    
+    # Return a pipeline of scaler and model for easy prediction
+    return scaler, model
+
+def main():
+    """Main function to orchestrate the ML pipeline."""
+    
+    train_df, test_df = load_data()
+    
+    print("\n2. Preprocessing data...")
+    # Separate target variable
+    y = train_df['target']
+    train_ids = train_df['id']
+    test_ids = test_df['id']
+    
+    # Drop unnecessary columns
+    train_df = train_df.drop(columns=['id', 'target'])
+    test_df = test_df.drop(columns=['id'])
+    
+    # Apply feature engineering
+    train_df = feature_engineer(train_df)
+    test_df = feature_engineer(test_df)
+    
+    # Align columns after one-hot encoding
+    train_labels = y
+    train_ids_final = train_ids
+    
+    # Align columns - crucial for inference
+    train_cols = train_df.columns
+    test_cols = test_df.columns
+    
+    missing_in_test = set(train_cols) - set(test_cols)
+    for c in missing_in_test:
+        test_df[c] = 0
+    
+    missing_in_train = set(test_cols) - set(train_cols)
+    for c in missing_in_train:
+        train_df[c] = 0
+        
+    test_df = test_df[train_cols]
+
+    # --- YOUR SOLUTION STARTS HERE ---
+    print("\n" + "="*60)
+    print("🎯 YOUR TASK: Improve this baseline!")
+    print("The current model is a simple Logistic Regression.")
+    print("\nIdeas for improvement:")
+    print("  - Feature Engineering: Try {{feature_technique_suggestion}}.")
+    print("  - Modeling: Use a more powerful model like {{model_approach_suggestion}}.")
+    print("  - Hyperparameter Tuning: Use GridSearchCV or RandomizedSearchCV.")
+    print("="*60 + "\n")
+    
+    # Train baseline model
+    scaler, model = train_baseline_model(train_df, train_labels)
+    
+    # Generate predictions on the test set
+    print("\n4. Generating final predictions...")
+    test_scaled = scaler.transform(test_df)
+    test_predictions = model.predict_proba(test_scaled)[:, 1]
+    
+    # Create submission file
+    print("\n5. Creating submission file...")
+    submission_df = pd.DataFrame({'id': test_ids, 'target': test_predictions})
+    submission_path = OUTPUT_DIR / "submission.csv"
+    submission_df.to_csv(submission_path, index=False)
+    print(f"   ✅ Submission file created at: {submission_path}")
+
+if __name__ == "__main__":
+    main()

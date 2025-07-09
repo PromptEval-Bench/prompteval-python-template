@@ -1,0 +1,46 @@
+# **Project Brief: Manufacturing Process State Prediction**
+
+**Date:** `{{current_date}}`
+**Company:** {{company_name}}
+**System:** {{system_name}}
+**Status:** **Core Predictive Model Required**
+
+---
+
+### **1. Business Scenario**
+
+`{{scenario_context}}`
+
+### **2. Your Task**
+
+You are provided with a dataset of simulated manufacturing control data. Your goal is to build a binary classification model that predicts the machine's state (`target` variable: 0 or 1) based on the 31 other features provided.
+
+### **3. Dataset**
+
+The necessary data files have been placed in your project directory:
+-   `train.csv`: The training set, containing 32 features and the binary `target` variable.
+-   `test.csv`: The test set, containing the same features as the training set, but without the `target` variable.
+-   `sample_submission.csv`: A file showing the correct submission format.
+
+The data contains a mix of continuous and categorical features. A unique feature of this dataset is a character-based feature `f_27` which you will need to process.
+
+### **4. Evaluation Metric**
+
+Your model's performance will be evaluated based on the **Area Under the Receiver Operating Characteristic Curve (ROC AUC)**. An AUC of 1.0 represents a perfect model, while an AUC of 0.5 represents a model with no discriminative power.
+
+### **5. Submission Format**
+
+You must create a `submission.csv` file with an `id` and a `target` column. The `target` column should contain the predicted probability of the machine being in state 1.
+
+```
+id,target
+800000,0.65
+800001,0.97
+...
+```
+
+### **6. Getting Started**
+
+1.  **Run the Starter Code:** Execute `python3 starter_code.py`. This script will load the data, perform basic feature engineering, train a baseline Logistic Regression model, and generate an initial `submission.csv`.
+2.  **Improve the Model:** Your main task is to modify `starter_code.py` to build a more powerful classifier that achieves a higher AUC score.
+3.  **Submit:** Once you have a `submission.csv` from your improved model, use `./scripts/submit.sh` to submit it for evaluation.
