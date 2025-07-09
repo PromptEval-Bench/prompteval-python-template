@@ -1,0 +1,45 @@
+{
+  "rule_based_params": {
+    "random_seed": {
+      "type": "integer",
+      "min": 0,
+      "max": 9999,
+      "description": "A random seed for ensuring reproducibility in models."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for a company specializing in conversational AI or voice synthesis technology. Examples: 'Vocalia AI', 'Synth-Speech Dynamics', 'Converse-Tech'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "product_name": {
+      "prompt": "Invent a sleek, modern name for a new voice assistant product developed by {company_name}. Examples: 'Aura', 'Nexus Voice', 'EchoSphere'. Return only the product name.",
+      "max_tokens": 15,
+      "temperature": 0.7,
+      "variables": ["company_name"]
+    },
+    "scenario_context": {
+      "prompt": "You are a Machine Learning Engineer at {company_name}, working on our next-generation voice assistant, {product_name}. A key feature is making {product_name} sound natural. This requires a robust Text Normalization Unit (TNU) to convert written text with symbols, numbers, and abbreviations into their proper spoken form before it reaches the speech synthesis engine. Your task is to build the core model for this TNU.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name", "product_name"]
+    },
+    "model_approach": {
+      "prompt": "Suggest a model architecture for a sequence-to-sequence text normalization task. Examples: 'Rule-based Finite-State Transducers (FSTs)', 'an LSTM with an Attention mechanism', 'a Transformer-based model (like T5)'. Return only the suggestion.",
+      "max_tokens": 25,
+      "temperature": 0.6
+    },
+    "feature_technique": {
+      "prompt": "Suggest a useful feature engineering technique for a text normalization task, focusing on token classification. Examples: 'Part-of-speech tagging', 'Dependency parsing features', 'Named Entity Recognition (NER) tags'. Return only the technique name.",
+      "max_tokens": 20,
+      "temperature": 0.5
+    }
+  },
+  "system_params": {
+     "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  }
+}

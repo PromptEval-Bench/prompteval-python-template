@@ -1,0 +1,48 @@
+# **Project Brief: Spoken-Form Text Normalization for {{product_name}}**
+
+**Date:** `{{current_date}}`
+**Company:** `{{company_name}}`
+**Product Team:** {{product_name}} Voice Engine
+**Status:** **Core Model Development**
+
+---
+
+### **1. Business Scenario**
+
+`{{scenario_context}}`
+
+### **2. Your Mission**
+
+Your goal is to create a model that accurately performs text normalization. This involves converting text from its written form to its spoken form, which is suitable for a text-to-speech (TTS) system. For example, your model should learn to convert "$3.16" into "three dollars, sixteen cents" and "12/5/2024" into "the twelfth of may twenty twenty four".
+
+### **3. Dataset**
+
+The required data has been downloaded into the `data/` directory. It consists of:
+
+-   `en_train.csv`: The training set. It contains the raw text (`before`), the normalized text (`after`), and the token `class` (e.g., 'DATE', 'MONEY', 'PLAIN').
+-   `en_test.csv`: The test set. It contains the `before` text, but the `after` column is what you must predict.
+-   `en_sample_submission.csv`: A file showing the correct submission format.
+
+### **4. Evaluation Metric**
+
+Your model will be judged on **prediction accuracy**. This is the total percentage of correctly predicted tokens. The predicted string and the actual string must match *exactly* to be counted as correct.
+
+### **5. Submission Format**
+
+You must create a `submission.csv` file. For each `id` in the test set, you must predict the normalized `after` text. The file must contain a header and follow this format:
+
+```
+id,after
+0_0,"the"
+0_1,"quick"
+0_2,"fox"
+...
+```
+
+### **6. Getting Started**
+
+1.  **Explore the Data:** Run `python3 explore_data.py` to get a feel for the dataset structure and statistics.
+2.  **Run the Baseline:** The `starter_code.py` file contains a simple, dictionary-based baseline model. Run it with `python3 starter_code.py` to generate your first `submission.csv`.
+3.  **Improve the Model:** Your main task is to modify `starter_code.py` to implement a more sophisticated model that achieves a higher accuracy than the baseline.
+
+Good luck, Engineer. The clarity of `{{product_name}}`'s voice depends on you.

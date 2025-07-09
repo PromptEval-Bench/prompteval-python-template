@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""
+{{company_name}} - Text Normalization for {{product_name}}
+Starter Code Template
+
+Author: [Your Name]
+Date: {{current_date}}
+"""
+
+import pandas as pd
+import numpy as np
+from pathlib import Path
+from tqdm import tqdm
+
+# Set random seed for reproducibility
+np.random.seed({{random_seed}})
+
+# Define data paths
+TRAIN_DATA_PATH = Path("./en_train.csv.zip")
+TEST_DATA_PATH = Path("./en_test.csv.zip")
+OUTPUT_DIR = Path("./")
+
+def load_data():
+    """Load the training and test datasets from their zip files."""
+    print("1. Loading data...")
+    try:
+        train_df = pd.read_csv(TRAIN_DATA_PATH)
+        test_df = pd.read_csv(TEST_DATA_PATH)
+        print("   ✅ Data loaded successfully.")
+        return train_df, test_df
+    except FileNotFoundError:
+        print(f"❌ Error: Data not found. Did init_task.sh run correctly?")
+        return None, None
+
+def explore_data(train_df):
+    """Performs a basic exploration of the training data."""
+    print("\n2. Exploring data...")
+    print(f"   Training samples: {len(train_df)}")
+    
+    print("\n   Class distribution (Top 10):")
+    print(train_df['class'].value_counts(normalize=True).head(10) * 100)
+    
+    print("\n   Sample tokens (before -> after):")
+    sample_rows = train_df[train_df['before'] != train_df['after']].head(5)
+    for _, row in sample_rows.iterrows():
+        print(f"   - [{row['class']}] '{row['before']}' -> '{row['after']}'")
+
+def train_baseline_model(train_df):
+    """
+    Trains a very simple baseline model.
+    This model uses a dictionary to map a 'before' token to its most common 'after' form.
+    """
+    print("\n3. Training baseline model...")
+    lookup = {}
+    for name, group in tqdm(train_df.groupby('before'), desc="Building lookup table"):
+        most_common = group['after'].mode()
+        if not most_common.empty:
+            lookup[name] = most_common[0]
+    print(f"   ✅ Baseline model trained. Lookup dictionary has {len(lookup)} entries.")
+    return lookup
+
+def generate_predictions(test_df, model_lookup):
+    """Generates predictions using the trained model."""
+    print("\n4. Generating predictions...")
+    
+    # TODO: Replace this simple lookup with your advanced model's prediction logic.
+    predictions = [model_lookup.get(token, token) for token in tqdm(test_df['before'], desc="Predicting")]
+    
+    test_df['after'] = predictions
+    print("   ✅ Predictions generated.")
+    return test_df
+
+def create_submission(predictions_df):
+    """Creates the submission.csv file in the required format."""
+    print("\n5. Creating submission file...")
+    submission_df = predictions_df[['id', 'after']]
+    submission_path = OUTPUT_DIR / "submission.csv"
+    submission_df.to_csv(submission_path, index=False)
+    print(f"   ✅ Submission file created at: {submission_path}")
+
+def main():
+    """Main function to orchestrate the ML pipeline."""
+    
+    # Load and explore data
+    train_df, test_df = load_data()
+    if train_df is None:
+        return
+    
+    explore_data(train_df)
+    
+    # --- YOUR SOLUTION STARTS HERE ---
+    print("\n" + "="*50)
+    print("🎯 YOUR TASK: Implement a better model!")
+    print("The following steps use a simple baseline. You should replace them.")
+    print("Consider these approaches:")
+    print("  - Feature Engineering: Use techniques like {{feature_technique}}.")
+    print("  - Model Architecture: Implement {{model_approach}}.")
+    print("="*50 + "\n")
+    
+    # Baseline model training and prediction
+    baseline_model = train_baseline_model(train_df)
+    predictions_df = generate_predictions(test_df, baseline_model)
+    
+    # Create the final submission file
+    create_submission(predictions_df)
+    
+    print("\nScript finished. Now, go and improve the model!")
+
+if __name__ == "__main__":
+    main()

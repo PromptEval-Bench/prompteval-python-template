@@ -1,0 +1,37 @@
+{
+  "task_id": "DS-HARD-002",
+  "category": "project",
+  "title": "Spoken-Form Text Normalization for Voice Assistants",
+  "subcategory": "natural-language-processing",
+  "difficulty": "easy",
+  "estimated_time_minutes": 120,
+  "points": 400,
+  "tags": [
+    "nlp",
+    "sequence-to-sequence",
+    "text-normalization",
+    "data-preprocessing",
+    "feature-engineering"
+  ],
+  "skills_assessed": [
+    "data_preprocessing_with_pandas",
+    "building_a_complete_ml_pipeline",
+    "handling_large_text_corpora",
+    "model_training_and_inference",
+    "adherence_to_submission_formats"
+  ],
+  "prerequisites": [
+    "proficient_with_pandas",
+    "basic_understanding_of_nlp_concepts",
+    "familiarity_with_machine_learning_workflows"
+  ],
+  "learning_outcomes": [
+    "Implement a solution for a real-world text normalization task",
+    "Build and evaluate a model on a large-scale text dataset",
+    "Gain experience with the practical challenges of NLP data"
+  ],
+  "source": "MLE-Bench",
+  "original_url": "https://www.kaggle.com/competitions/text-normalization-challenge-english-language",
+  "version": "1.0.0",
+  "last_updated": "2025-07-08"
+}
