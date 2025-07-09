@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+"""
+Solution for {{company_name}} - {{title}}
+Date: {{current_date}}
+"""
+import json
+from collections import Counter
+
+def {{function_name}}(dna_sequence: str, genetic_marker: str) -> int:
+    """
+    Counts the number of substrings in dna_sequence that can be rearranged 
+    to have genetic_marker as a prefix.
+
+    This means counting substrings where the character frequencies are
+    sufficient to form the genetic_marker.
+
+    Args:
+        dna_sequence: The long string of genetic data to search within.
+        genetic_marker: The target string representing the marker.
+
+    Returns:
+        An integer representing the total count of valid substrings.
+    """
+    
+    # --- Your implementation starts here ---
+    # A naive solution would be to check every possible substring, but that
+    # would be too slow (O(N^2) * alphabet_size) given the constraints.
+    # Consider using a sliding window approach to achieve an O(N) solution.
+    # You'll need to efficiently track character counts in the window
+    # and compare them to the marker's counts.
+
+    # Placeholder for your implementation
+    count = 0
+    # Your efficient algorithm goes here.
+    
+    return count
+    # --- Your implementation ends here ---
+
+
+# --- Main execution block to test your solution ---
+if __name__ == '__main__':
+    print("🚀 Running local test for {{title}}...")
+    try:
+        with open('task_data.json', 'r') as f:
+            data = json.load(f)
+        
+        sequence = data['dna_sequence']
+        marker = data['genetic_marker']
+
+        print(f"🏢 Company: {data['company_name']}")
+        print(f"🧬 {{data_unit_1}} length: {len(sequence)}")
+        print(f"🎯 {{data_unit_2}} length: {len(marker)}")
+        
+        # Call the student's function
+        total_valid_substrings = {{function_name}}(sequence, marker)
+        
+        print(f"\n✅ Calculation complete.")
+        print(f"🔎 Total potential marker sequences found: {total_valid_substrings}")
+
+    except FileNotFoundError:
+        print("❌ Error: task_data.json not found. Please ensure the init script has run.")
+    except Exception as e:
+        print(f"An error occurred during testing: {e}")

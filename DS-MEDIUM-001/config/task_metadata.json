@@ -1,0 +1,35 @@
+{
+  "task_id": "DS-MEDIUM-001",
+  "category": "algorithm",
+  "title": "Identifying Potential Genetic Marker Sequences",
+  "subcategory": "sliding-window",
+  "difficulty": "medium",
+  "estimated_time_minutes": 35,
+  "points": 200,
+  "tags": [
+    "sliding-window",
+    "hash-map",
+    "string-processing",
+    "bioinformatics",
+    "frequency-count"
+  ],
+  "skills_assessed": [
+    "efficient_string_processing",
+    "sliding_window_implementation",
+    "character_frequency_analysis",
+    "algorithm_optimization_from_bruteforce"
+  ],
+  "prerequisites": [
+    "hash_maps_or_dictionaries",
+    "basic_string_manipulation",
+    "understanding_of_the_sliding_window_concept"
+  ],
+  "learning_outcomes": [
+    "Apply the sliding window technique to efficiently solve substring counting problems",
+    "Optimize a brute-force O(N^2) solution to an efficient O(N) solution",
+    "Utilize frequency maps (hash maps) for complex string comparisons beyond simple equality"
+  ],
+  "original_url": "https://leetcode.com/problems/count-substrings-that-can-be-rearranged-to-contain-a-string-i/",
+  "version": "1.0.0",
+  "last_updated": "2025-07-08"
+}

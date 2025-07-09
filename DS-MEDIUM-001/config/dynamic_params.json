@@ -1,0 +1,59 @@
+{
+  "rule_based_params": {
+    "dna_sequence_length": {
+      "type": "integer",
+      "min": 50000,
+      "max": 100000,
+      "description": "The total length of the DNA sequence to be analyzed."
+    },
+    "genetic_marker_length": {
+      "type": "integer",
+      "min": 1000,
+      "max": 5000,
+      "description": "The length of the target genetic marker."
+    },
+    "alphabet_size": {
+      "type": "integer",
+      "min": 4,
+      "max": 10,
+      "description": "The number of unique genetic components (e.g., 4 for 'a','c','g','t')."
+    }
+  },
+  "llm_variations": {
+    "company_name": {
+      "prompt": "Generate a realistic name for a biotechnology or genomics research company. Examples: 'GenoDynamics Inc.', 'BioGene Corp', 'SynthHelix Labs'. Return only the company name.",
+      "max_tokens": 20,
+      "temperature": 0.8
+    },
+    "scenario_context": {
+      "prompt": "You are a bioinformatician at {company_name}, a pioneer in genomic research. You've been given a newly sequenced DNA strand and are tasked with a foundational analysis: identifying all segments of this strand that contain the necessary molecular components to potentially form a critical genetic marker we are researching. This initial count is a vital first step for more complex downstream analysis.",
+      "max_tokens": 150,
+      "temperature": 0.7,
+      "variables": ["company_name"]
+    },
+    "function_name": {
+      "prompt": "Create a professional Python function name for counting substrings that contain the required characters for a target string. Use snake_case. Examples: 'count_potential_marker_segments', 'find_valid_dna_substrings', 'count_rearrangeable_sequences'. Return only the function name.",
+      "max_tokens": 20,
+      "temperature": 0.6
+    },
+    "data_unit_1": {
+      "prompt": "Generate a technical term for a long biological sequence. Examples: 'Full DNA Sequence', 'Genomic Data Stream', 'Raw Nucleotide Chain'. Return only the term.",
+      "max_tokens": 10,
+      "temperature": 0.5
+    },
+    "data_unit_2": {
+      "prompt": "Generate a technical term for a target pattern within a biological sequence. Examples: 'Target Genetic Marker', 'Protein Signature', 'Consensus Sequence'. Return only the term.",
+      "max_tokens": 10,
+      "temperature": 0.5
+    }
+  },
+  "system_params": {
+     "current_date": {
+      "type": "system",
+      "format": "%Y-%m-%d"
+    }
+  },
+  "constraints": {
+    "solvability_check": "genetic_marker_length <= dna_sequence_length"
+  }
+}

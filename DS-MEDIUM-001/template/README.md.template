@@ -1,0 +1,58 @@
+# **Project Brief: {{title}}**
+
+**Date:** `{{current_date}}`
+**Company:** `{{company_name}}`
+**Department:** Bioinformatics R&D
+**Status:** **Analysis Required**
+
+---
+
+### **1. Business Scenario**
+
+`{{scenario_context}}`
+
+A DNA segment is considered a "potential marker" if the collection of its constituent genetic components (e.g., 'a', 'c', 'g', 't') is sufficient to form the target marker through rearrangement. The order of components in the segment does not matter, only their counts.
+
+### **2. Technical Task: Counting Potential Marker Sequences**
+
+You are given two strings representing genetic data:
+-   A long **{{data_unit_1}}** (`dna_sequence`).
+-   A shorter **{{data_unit_2}}** (`genetic_marker`).
+
+Your task is to write an efficient algorithm to count the total number of substrings of the `dna_sequence` that are "potential markers".
+
+A substring is a "potential marker" if its characters can be rearranged to form a new string that has the `genetic_marker` as a prefix. This is equivalent to saying that for every character ('a' through 'z'), its frequency in the substring is greater than or equal to its frequency in the `genetic_marker`.
+
+### **3. Input Data**
+
+Your algorithm will receive its parameters from the `task_data.json` file, which contains:
+-   `dna_sequence`: The long string of genetic data to search within.
+-   `genetic_marker`: The target string representing the marker.
+
+### **4. Your Deliverable**
+
+Implement the `{{function_name}}` function in the `solution.py` file.
+
+-   **Input:** `dna_sequence` (str), `genetic_marker` (str).
+-   **Output:** An integer representing the total count of valid substrings.
+
+### **5. Example**
+
+Let's say `dna_sequence = "bcca"` and `genetic_marker = "abc"`.
+
+-   **Marker Analysis:** The `genetic_marker` "abc" requires one 'a', one 'b', and one 'c'.
+-   **Substring Analysis:**
+    -   "b": Not valid (missing 'a', 'c').
+    -   "bc": Not valid (missing 'a').
+    -   "bcc": Not valid (missing 'a').
+    -   "bcca": **Valid**. It contains one 'b', two 'c's, and one 'a'. This is enough to form "abc". It can be rearranged to "abcc", which has "abc" as a prefix.
+    -   "c": Not valid.
+    -   ... and so on.
+-   The only valid substring is "bcca".
+-   **Output:** 1
+
+Let's say `dna_sequence = "abcabc"` and `genetic_marker = "abc"`.
+-   Substrings like "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc", "abc" (the second one) are all valid.
+-   **Output:** 10
+
+Good luck with the analysis. The efficiency of your algorithm is key, as these DNA sequences can be very long.
